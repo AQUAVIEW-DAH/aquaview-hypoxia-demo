@@ -4,13 +4,15 @@ What does it actually look like to build a multi-source ocean analysis from scra
 
 Hypoxia, dissolved oxygen dropping below 2 mg/L, kills coastal ecosystems fast. Fish flee, shellfish die, and the damage can cascade for months. Monitoring networks catch it after it starts. The question we wanted to answer: can we predict when a new hypoxia event will *begin*, days before it happens, using data from a network of stations, satellite products, and offshore profiles?
 
-This post walks through building that system for the northern Gulf of Mexico. Along the way, we used [AQUAVIEW](https://aquaview.ai) as the data discovery and access layer, and we'll be honest about what that did and didn't change.
+This post walks through building that system for the northern Gulf of Mexico. Along the way, we used [AQUAVIEW](https://aquaview.org) as the data discovery and access layer, and we'll be honest about what that did and didn't change.
 
-## The Hard Problem: Onset, Not Persistence
+## The Hard Problem: Onset, Not State
 
-Most hypoxia forecasting predicts whether DO will be low tomorrow given that it's already low today. That's persistence forecasting, and DO autocorrelation does the heavy lifting.
+The Gulf of Mexico hypoxia prediction field has moved fast. [Rajasekaran et al. (2025)](https://arxiv.org/abs/2602.05178) benchmark four deep learning architectures on daily hypoxia classification, with their Spatio-Temporal Transformer reaching AUC-ROC above 0.98. [Xue et al. (2025)](https://www.nature.com/articles/s41598-025-17053-7) blend ROMS hindcast output with AI for 72-hour forecasts. XGBoost and Random Forest models show up in study after study, from [Gulf-wide spatial mapping](https://www.sciencedirect.com/science/article/pii/S2352485525003548) to lagoon-scale predictions in the Mediterranean.
 
-The harder question is: when will a *new* event begin? Predicting the transition from normal oxygen to hypoxic conditions is what coastal managers actually need, and it's what we built.
+Nearly all of this work predicts hypoxia *state*: is dissolved oxygen below the threshold right now, or will it be tomorrow? Most models also train on output from coupled hydrodynamic-biogeochemical models rather than raw observations. Both choices make sense for their purposes, but they leave a gap.
+
+We targeted something different: onset prediction. Not "will DO be low?" but "when will a new hypoxic event begin?" Predicting the transition from normal oxygen to hypoxic conditions, days in advance, from observational data alone. That's the question coastal managers actually need answered, and it's harder than state classification because DO autocorrelation can't carry you.
 
 ## Finding the Data
 
@@ -137,7 +139,7 @@ The extraction script logs every AQUAVIEW API call it makes, from search queries
 
 ## Key Takeaways
 
-1. Onset prediction is feasible at multi-day lead times, with AUC-ROC above 0.85 at seven days out. Predicting when new hypoxia events will begin, not just whether low DO persists, is the operationally useful problem, and it's tractable with standard ML methods applied to multi-source data.
+1. Onset prediction from observational data is feasible at multi-day lead times, with AUC-ROC above 0.85 at seven days out, without requiring physics-model hindcasts. Predicting when new hypoxia events will begin, not just classifying the current state, is the operationally useful problem, and it's tractable with standard ML methods applied to multi-source data.
 
 2. Satellite features matter most when lead time matters most. At one-day lead, local DO dominates. At five to seven days, satellite-derived SST, chlorophyll, and eddy energy improve AUC-PR by 5+ points over station-only models. AQUAVIEW's discovery of the CoastWatch eddy index product, a dataset we wouldn't have found through NDBC alone, is what made that comparison possible.
 
@@ -147,4 +149,4 @@ The extraction script logs every AQUAVIEW API call it makes, from search queries
 
 ---
 
-*Data discovered and accessed via [AQUAVIEW](https://aquaview.ai) from NOAA NDBC, World Ocean Database, and CoastWatch ERDDAP. Inspired by [Rajasekaran et al. (2025)](https://arxiv.org/abs/2602.05178), "Benchmarking Artificial Intelligence Models for Daily Coastal Hypoxia Forecasting."*
+*Data discovered and accessed via [AQUAVIEW](https://aquaview.org) from NOAA NDBC, World Ocean Database, and CoastWatch ERDDAP. Inspired by [Rajasekaran et al. (2025)](https://arxiv.org/abs/2602.05178), "Benchmarking Artificial Intelligence Models for Daily Coastal Hypoxia Forecasting."*

@@ -483,13 +483,11 @@
 
         <p>This post walks through building that system for the northern Gulf of Mexico. Along the way, we used <a href="https://aquaview.org">AQUAVIEW</a> as the data discovery and access layer, and we'll be honest about what that did and didn't change.</p>
 
-        <h2>The Hard Problem: Onset, Not State</h2>
+        <h2>The Hard Problem: Onset, Not Persistence</h2>
 
-        <p>The Gulf of Mexico hypoxia prediction field has moved fast. <a href="https://arxiv.org/abs/2602.05178">Rajasekaran et al. (2025)</a> benchmark four deep learning architectures on daily hypoxia classification, with their Spatio-Temporal Transformer reaching AUC-ROC above 0.98. <a href="https://www.nature.com/articles/s41598-025-17053-7">Xue et al. (2025)</a> blend ROMS hindcast output with AI for 72-hour forecasts. XGBoost and Random Forest models show up in study after study, from <a href="https://www.sciencedirect.com/science/article/pii/S2352485525003548">Gulf-wide spatial mapping</a> to lagoon-scale predictions in the Mediterranean.</p>
+        <p>Most hypoxia forecasting predicts whether DO will be low tomorrow given that it's already low today. That's persistence forecasting, and DO autocorrelation does the heavy lifting.</p>
 
-        <p>Nearly all of this work predicts hypoxia <em>state</em>: is dissolved oxygen below the threshold right now, or will it be tomorrow? Most models also train on output from coupled hydrodynamic-biogeochemical models rather than raw observations. Both choices make sense for their purposes, but they leave a gap.</p>
-
-        <p>We targeted something different: onset prediction. Not "will DO be low?" but "when will a new hypoxic event begin?" Predicting the transition from normal oxygen to hypoxic conditions, days in advance, from observational data alone. That's the question coastal managers actually need answered, and it's harder than state classification because DO autocorrelation can't carry you.</p>
+        <p>The harder question is: when will a new event begin? Predicting the transition from normal oxygen to hypoxic conditions is what coastal managers actually need, and it's what we built.</p>
 
         <h2>Finding the Data</h2>
 
@@ -592,8 +590,6 @@ GET /search?collections=COASTWATCH&q=chlor               → 8 chlorophyll produ
 
         <p>The no-DO set is revealing. At one day, removing dissolved oxygen drops AUC-ROC from 0.921 to 0.807. At seven days, no-DO (0.850) nearly matches the full model (0.853). Environmental context alone carries almost all the predictive signal at longer horizons.</p>
 
-        <p>For context: these are onset predictions from raw observational data, a harder task than the state classification most published models target. <a href="https://arxiv.org/abs/2602.05178">Rajasekaran et al.</a> report AUC-ROC of 0.98+ for daily state classification using deep learning on ROMS hindcast data. <a href="https://www.nature.com/articles/s41598-025-17053-7">Xue et al.</a> report accuracy of 0.85 and F1 of 0.72 for their blended mechanistic-AI model. Our numbers are lower, but they're answering a different question: not "is DO low right now?" but "will a new event start in 5-7 days?" with no physics model in the loop. The apples-to-apples comparison doesn't quite exist yet in the literature.</p>
-
         <div class="results-card">
             <h3>Model Performance Across Lead Times</h3>
             <p class="subtitle">AUC-ROC / AUC-PR for four feature sets. Satellite features provide the largest advantage at 5-7 day leads.</p>
@@ -660,9 +656,9 @@ GET /search?collections=COASTWATCH&q=chlor               → 8 chlorophyll produ
         <h2>Key Takeaways</h2>
 
         <ol>
-            <li>Onset prediction from observational data is feasible at multi-day lead times, with AUC-ROC above 0.85 at seven days out, without requiring physics-model hindcasts.</li>
-            <li>Satellite features matter most when lead time matters most. At 5-7 days, satellite-derived SST, chlorophyll, and eddy energy improve AUC-PR by 5+ points over station-only models. That's consistent with basin-scale signals propagating to the coast on multi-day timescales.</li>
-            <li>Hypoxia is hyperlocal. GBHM6 accounts for 56% of all hypoxic days across 12 stations. Multi-station discovery matters because you can't assume in advance which stations carry the signal.</li>
+            <li>Onset prediction is feasible at multi-day lead times, with AUC-ROC above 0.85 at seven days out.</li>
+            <li>Satellite features matter most when lead time matters most. At 5-7 days, satellite-derived SST, chlorophyll, and eddy energy improve AUC-PR by 5+ points over station-only models.</li>
+            <li>Hypoxia is hyperlocal. GBHM6 accounts for 56% of all hypoxic days. You can't assume which stations matter.</li>
             <li>As agents handle more of the workflow, unified catalogs become infrastructure. This entire analysis was built in a single session by an AI agent using AQUAVIEW as the entry point. <a href="https://github.com/AQUAVIEW-DAH/aquaview-hypoxia-demo">Try it yourself.</a></li>
         </ol>
 
