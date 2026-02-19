@@ -1,0 +1,8 @@
+xarray>=2022.0
+netCDF4>=1.6
+xgboost>=1.7
+scikit-learn>=1.2
+pandas>=1.5
+numpy>=1.23
+matplotlib>=3.6
+requests>=2.28

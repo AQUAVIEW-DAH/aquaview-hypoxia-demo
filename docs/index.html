@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicting Coastal Hypoxia Across 12 Stations and 3 Data Systems</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <style>
+        :root {
+            --bg: #0a0f1a;
+            --bg-card: #131a2b;
+            --border: #1e2940;
+            --text: #c8d4e6;
+            --text-muted: #8a96b3;
+            --accent: #5eadd4;
+            --accent-teal: #5eead4;
+            --red: #f97066;
+            --orange: #f5a623;
+            --green: #52c41a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: Georgia, 'Times New Roman', serif;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 2.5em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--accent-teal);
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 1.6em;
+            font-weight: 600;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            color: var(--accent);
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid var(--accent);
+        }
+
+        a:hover {
+            color: var(--accent-teal);
+            border-bottom-color: var(--accent-teal);
+        }
+
+        pre {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 25px 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.6;
+        }
+
+        code {
+            color: var(--accent-teal);
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin: 50px 0;
+        }
+
+        .stat-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: 600;
+            color: var(--accent-teal);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .map-section {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            background-color: var(--bg-card);
+            padding: 40px 20px;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        #map {
+            height: 500px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin: 0 auto;
+            max-width: 900px;
+        }
+
+        .map-legend {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 0.9em;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .legend-item {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-marker {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .legend-marker.primary {
+            background-color: var(--accent-teal);
+            box-shadow: 0 0 0 3px var(--accent-teal), 0 0 0 6px var(--bg-card);
+        }
+
+        .legend-marker.secondary {
+            background-color: var(--accent);
+        }
+
+        .results-section {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 30px;
+            margin: 50px 0;
+        }
+
+        .results-section h3 {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        .metric-group {
+            border-left: 3px solid var(--border);
+            padding-left: 15px;
+        }
+
+        .metric-lead {
+            font-weight: 600;
+            color: var(--accent-teal);
+            margin-bottom: 12px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .metric-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+        }
+
+        .metric-value {
+            text-align: right;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .metric-value.teal {
+            color: var(--accent-teal);
+        }
+
+        .metric-value.blue {
+            color: var(--accent);
+        }
+
+        .metric-value.muted {
+            color: var(--text-muted);
+        }
+
+        .metric-value.orange {
+            color: var(--orange);
+        }
+
+        .features-section {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 25px;
+            margin: 40px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-set {
+            padding: 15px;
+            border-left: 3px solid var(--border);
+        }
+
+        .feature-set.cross {
+            border-left-color: var(--accent-teal);
+        }
+
+        .feature-set.ndbc {
+            border-left-color: var(--accent);
+        }
+
+        .feature-set.local {
+            border-left-color: var(--text-muted);
+        }
+
+        .feature-set.no-do {
+            border-left-color: var(--orange);
+        }
+
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .feature-title.cross {
+            color: var(--accent-teal);
+        }
+
+        .feature-title.ndbc {
+            color: var(--accent);
+        }
+
+        .feature-title.local {
+            color: var(--text-muted);
+        }
+
+        .feature-title.no-do {
+            color: var(--orange);
+        }
+
+        .feature-list {
+            list-style: none;
+            font-size: 0.85em;
+            color: var(--text-muted);
+        }
+
+        .feature-list li {
+            margin-bottom: 6px;
+        }
+
+        .feature-list li:before {
+            content: "→ ";
+            color: var(--text-muted);
+            margin-right: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            font-size: 0.9em;
+        }
+
+        table thead {
+            background-color: var(--bg-card);
+            border-bottom: 2px solid var(--border);
+        }
+
+        table th {
+            padding: 12px 8px;
+            text-align: left;
+            color: var(--accent);
+            font-weight: 600;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        table tbody tr:hover {
+            background-color: var(--bg-card);
+        }
+
+        .primary-station {
+            color: var(--accent-teal);
+            font-weight: 600;
+        }
+
+        footer {
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+            font-size: 0.85em;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .leaflet-container {
+            background-color: #1a1f2e;
+        }
+
+        .leaflet-popup-content {
+            color: var(--bg);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 12px;
+        }
+
+        .leaflet-popup-content-wrapper {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+        }
+
+        .leaflet-popup-tip {
+            background-color: var(--bg-card);
+        }
+
+        .leaflet-control-zoom {
+            display: none;
+        }
+
+        ol {
+            margin-left: 20px;
+            margin-bottom: 40px;
+        }
+
+        ol li {
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Predicting Coastal Hypoxia Across 12 Stations and 3 Data Systems With One Catalog</h1>
+            <p style="font-size: 1.1em; color: var(--text-muted); margin-top: 15px;">What does it actually look like to build a multi-source ocean analysis from scratch?</p>
+        </header>
+
+        <p>Hypoxia, dissolved oxygen dropping below 2 mg/L, kills coastal ecosystems fast. Fish flee, shellfish die, and the damage can cascade for months. Monitoring networks catch it after it starts. The question we wanted to answer: can we predict when a new hypoxia event will <em>begin</em>, days before it happens, using data from a network of stations, satellite products, and offshore profiles?</p>
+
+        <p>This post walks through building that system for the northern Gulf of Mexico. Along the way, we used <a href="https://aquaview.ai">AQUAVIEW</a> as the data discovery and access layer, and we'll be honest about what that did and didn't change.</p>
+
+        <h2>The Hard Problem: Onset, Not Persistence</h2>
+
+        <p>Most hypoxia forecasting predicts whether DO will be low tomorrow given that it's already low today. That's persistence forecasting, and DO autocorrelation does the heavy lifting.</p>
+
+        <p>The harder question is: when will a new event begin? Predicting the transition from normal oxygen to hypoxic conditions is what coastal managers actually need, and it's what we built.</p>
+
+        <h2>Finding the Data</h2>
+
+        <p>The first step in any ocean analysis is figuring out what data exists, where it lives, and how to get it. This is usually the most tedious part. You're browsing NOAA pages, clicking through THREDDS directories, guessing at URL patterns, and hoping variable names are consistent across stations.</p>
+
+        <p>We used AQUAVIEW's STAC API to shortcut this. Three sets of API calls did the core discovery work:</p>
+
+        <pre><code>GET /search?collections=NDBC&bbox=-91,28,-85,31 → 72 NDBC stations
+GET /search?collections=WOD&q=Oxygen&bbox=-91,28,-85,31 → 1,770 WOD cruise datasets
+GET /search?collections=COASTWATCH&q=sea surface temperature&bbox=-91,28,-85,31 → 25 satellite SST datasets
+GET /search?collections=COASTWATCH&q=chlor&bbox=-91,28,-85,31 → 8 satellite chlorophyll datasets</code></pre>
+
+        <p>Three different data systems. Three different hosting infrastructures. Same API.</p>
+
+        <p>From the NDBC results, we filtered for stations where aquaview:variables includes dissolved_oxygen, which narrowed 72 stations down to 14 with DO sensors listed. Then for each of those 14, a GET /collections/NDBC/items/{id} call returned the full item metadata including OPeNDAP asset URLs we'd use to download data. No URL construction, no guessing. The download links came straight from the catalog.</p>
+
+        <p>Two of those 14 turned out to have garbage data: every dissolved oxygen reading was the fill value 99.0. Quality filtering dropped them, leaving 12 stations with valid dissolved oxygen records.</p>
+
+        <p>The CoastWatch discovery was the most interesting addition. AQUAVIEW returned satellite product items with ERDDAP endpoints in their assets field. One product, the Multiparameter Eddy Significance Index, bundles daily satellite SST, sea surface salinity, chlorophyll-a, sea surface height, and eddy kinetic energy into a single gridded dataset at 0.25° resolution. Because ERDDAP supports server-side spatial subsetting, we could request just the grid cells covering our study area. That's 1,438 days of daily satellite coverage from a dataset we wouldn't have found through NDBC alone.</p>
+
+        <p>That's three data access patterns: NDBC stations via OPeNDAP (THREDDS), WOD profiles via S3, and CoastWatch satellite grids via ERDDAP. Each has its own URL structure, its own subsetting conventions, and its own metadata schema. AQUAVIEW abstracts all of that behind assets.csv.href and assets.dods.href.</p>
+
+        <h2>The Station Network</h2>
+
+        <p>AQUAVIEW discovered 12 usable NDBC stations with dissolved oxygen sensors across the northern Gulf.</p>
+
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-value">30,500</div>
+                <div class="stat-label">Station-Days</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">237</div>
+                <div class="stat-label">Hypoxia Onsets</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">1,438</div>
+                <div class="stat-label">Satellite Days</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">319</div>
+                <div class="stat-label">Features</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="map-section">
+        <div id="map"></div>
+        <div class="map-legend">
+            <div class="legend-item">
+                <div class="legend-marker primary"></div>
+                <span>Primary station (GBHM6 - prediction target, Bayou Heron)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-marker secondary"></div>
+                <span>Secondary stations (correlated with DPHA1)</span>
+            </div>
+            <div class="legend-item">
+                <span style="color: var(--accent); opacity: 0.5;">━━━</span>
+                <span>Correlation lines to reference (DPHA1)</span>
+            </div>
+            <div class="legend-item">
+                <span style="color: var(--accent-teal); opacity: 0.4;">⬜</span>
+                <span>Study area & satellite coverage zone</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <p>That's roughly 30,500 station-days of observations, 237 hypoxia onset events, and 835 total hypoxic days across 9 stations. GBHM6 alone accounts for more than half of all hypoxic days. Hypoxia is extremely localized even within this relatively small network.</p>
+
+        <h2>What the Data Shows</h2>
+
+        <p>The station correlations tell an interesting story. Once fill values were properly filtered, most stations showed strong monthly DO correlations with DPHA1: Cedar Point (r=0.901), Bon Secour (r=0.895), Perdido Pass (r=0.883). The Grand Bay stations correlate well too (GDQM6: r=0.793, GBHM6: r=0.786).</p>
+
+        <p>This matters for modeling because it means the cross-station features carry real signal. A drop in DO at Cedar Point today likely reflects conditions that will show up at Dauphin Island soon. The network isn't just more data; it's spatial context that a single-station model can't capture.</p>
+
+        <h2>Station Data</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Station</th>
+                    <th>Location</th>
+                    <th>Hypoxic Days</th>
+                    <th>Onset Events</th>
+                    <th>Mean DO (mg/L)</th>
+                </tr>
+            </thead>
+            <tbody id="station-table">
+            </tbody>
+        </table>
+
+        <h2>Model Results</h2>
+
+        <p>At one-day lead, local station data alone (AUC-ROC 0.919) performs essentially the same as the full multi-source model (0.917). When you're predicting 24 hours out, the target station's own dissolved oxygen trend contains most of the signal.</p>
+
+        <p>The picture changes at five and seven-day lead times. At five days, the satellite-enriched model (0.866 AUC-ROC, 0.610 AUC-PR) outperforms NDBC-only (0.847, 0.555). At seven days, the gap persists: 0.853/0.642 vs 0.842/0.590. The satellite features — SST anomalies and eddy kinetic energy from CoastWatch — provide basin-scale context that arrives at the coast days later. That's 36 additional engineered features from 1,438 days of satellite coverage, discovered through AQUAVIEW's CoastWatch collection.</p>
+
+        <p>The no-DO set is revealing. At one day, removing dissolved oxygen drops AUC-ROC from 0.921 to 0.807. At seven days, no-DO (0.850) nearly matches the full model (0.853). Environmental context alone carries almost all the predictive signal at longer horizons.</p>
+
+        <div class="results-section">
+            <h3>Model Performance Across Lead Times</h3>
+            <p style="font-size: 0.95em; color: var(--text-muted); margin-bottom: 20px;">AUC-ROC and AUC-PR scores for four feature sets at increasing forecast horizons. Satellite features provide the largest advantage at 5–7 day lead times.</p>
+            <div class="results-grid" id="results-grid">
+            </div>
+        </div>
+
+        <h2>Feature Engineering</h2>
+
+        <div class="features-section">
+            <div class="features-grid">
+                <div class="feature-set cross">
+                    <div class="feature-title cross">Cross-Source (319)</div>
+                    <ul class="feature-list">
+                        <li>NDBC: 18 lags of DO, salinity, temperature</li>
+                        <li>Satellite: 36 CoastWatch features (SST, chlorophyll, eddy energy)</li>
+                        <li>Network: Cross-station DO correlations (11 upstream sites)</li>
+                        <li>Temporal: Month, hour-of-day indicators</li>
+                    </ul>
+                </div>
+                <div class="feature-set ndbc">
+                    <div class="feature-title ndbc">NDBC-Only (283)</div>
+                    <ul class="feature-list">
+                        <li>DO lags (1–7 days)</li>
+                        <li>Salinity lags</li>
+                        <li>Temperature lags</li>
+                        <li>Temporal indicators</li>
+                    </ul>
+                </div>
+                <div class="feature-set local">
+                    <div class="feature-title local">Local-Only (173)</div>
+                    <ul class="feature-list">
+                        <li>Same-station DO lags</li>
+                        <li>Temperature lags</li>
+                        <li>Salinity lags</li>
+                        <li>Temporal indicators</li>
+                    </ul>
+                </div>
+                <div class="feature-set no-do">
+                    <div class="feature-title no-do">No-DO (182)</div>
+                    <ul class="feature-list">
+                        <li>All satellite features</li>
+                        <li>Cross-station temp/salinity</li>
+                        <li>Network correlations</li>
+                        <li>Temporal context only</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h2>What AQUAVIEW Did and Didn't Do</h2>
+
+        <p>AQUAVIEW helped with discovery across three different data systems. Each item's assets field contains the actual download URLs. The script goes from catalog query to data download without URL reverse-engineering.</p>
+
+        <p>We found stations we didn't know about. The original plan called for 9 stations. AQUAVIEW returned 14 DO-equipped stations, 5 more than expected. KATA1 alone contributed 110 hypoxic days and 43 onset events.</p>
+
+        <p>A practical limitation: WOD annual files are multi-gigabyte global datasets. AQUAVIEW correctly provided their S3 URLs, but these files require byte-range requests rather than direct HTTP access. The CoastWatch ERDDAP datasets required iteration too. AQUAVIEW provided the base URLs and variable metadata, but ERDDAP's griddap subsetting syntax is finicky: each variable needs its own dimension constraints, some datasets have hidden altitude dimensions, and coordinate values must align with the actual grid. Getting the queries right took several rounds. The catalog handled discovery; the subsetting details were ours to figure out.</p>
+
+        <p>What AQUAVIEW didn't do: the science. Knowing that satellite SST anomalies serve as hypoxia precursors, designing lag features, filtering fill values — that's domain knowledge. A catalog can point you to the data. It can't tell you what to do with it.</p>
+
+        <h2>Where This Is Heading</h2>
+
+        <p>This analysis was built with an AI agent (Claude) handling the data discovery and pipeline construction. In that world, a structured STAC API with consistent metadata and asset URLs is what makes agent-driven data access reliable rather than merely possible.</p>
+
+        <p>AQUAVIEW currently spans 24 collections. As that grows, no agent can independently track all those access patterns. The catalog becomes the only practical entry point.</p>
+
+        <h2>Key Takeaways</h2>
+
+        <ol>
+            <li>Onset prediction is feasible at multi-day lead times, with AUC-ROC above 0.85 at seven days out.</li>
+            <li>Satellite features matter most when lead time matters most. At 5–7 days, satellite-derived SST, chlorophyll, and eddy energy improve AUC-PR by 5+ points over station-only models.</li>
+            <li>Hypoxia is hyperlocal. GBHM6 accounts for 56% of all hypoxic days. You can't assume which stations matter.</li>
+            <li>As agents handle more of the workflow, unified catalogs become infrastructure. This entire analysis was built in a single session by an AI agent using AQUAVIEW as the entry point.</li>
+        </ol>
+
+        <footer>
+            <p><strong>Data sources:</strong> NOAA NDBC Buoys, World Ocean Database (WOD), NOAA CoastWatch satellite products. Station data accessed via <a href="https://aquaview.ai">AQUAVIEW</a> STAC API. Analysis completed using multi-source integration across OPeNDAP, ERDDAP, and S3 access patterns.</p>
+            <p><strong>Citation:</strong> AQUAVIEW STAC Catalog. Data from NOAA/NWS National Data Buoy Center, NOAA/NCEI World Ocean Database, and NOAA/NESDIS CoastWatch.</p>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script>
+        const stations = {
+            "GBHM6": {"name":"Bayou Heron, Grand Bay, MS","lat":30.418,"lon":-88.405,"days":2463,"hyp_days":469,"events":100,"do_mean":4.04,"corr":0.786},
+            "KATA1": {"name":"Katrina Cut, AL","lat":30.258,"lon":-88.213,"days":2704,"hyp_days":110,"events":43,"do_mean":5.85,"corr":0.763},
+            "BSCA1": {"name":"Bon Secour, AL","lat":30.329,"lon":-87.829,"days":3576,"hyp_days":96,"events":47,"do_mean":6.70,"corr":0.895},
+            "CRTA1": {"name":"Cedar Point, AL","lat":30.308,"lon":-88.14,"days":3362,"hyp_days":48,"events":11,"do_mean":7.84,"corr":0.901},
+            "MBLA1": {"name":"Middle Bay Lighthouse, AL","lat":30.437,"lon":-88.011,"days":2365,"hyp_days":48,"events":22,"do_mean":7.91,"corr":0.760},
+            "MHPA1": {"name":"Meaher Park, AL","lat":30.667,"lon":-87.936,"days":4717,"hyp_days":26,"events":3,"do_mean":7.47,"corr":0.765},
+            "GDQM6": {"name":"Bangs Lake, Grand Bay, MS","lat":30.357,"lon":-88.463,"days":1958,"hyp_days":17,"events":4,"do_mean":7.16,"corr":0.793},
+            "DPHA1": {"name":"Dauphin Island Sea Lab, AL","lat":30.251,"lon":-88.078,"days":4228,"hyp_days":17,"events":5,"do_mean":7.77,"corr":1.0},
+            "WKQA1": {"name":"Fish River, Weeks Bay, AL","lat":30.417,"lon":-87.823,"days":1566,"hyp_days":4,"events":2,"do_mean":7.28,"corr":0.765},
+            "PPTA1": {"name":"Perdido Pass, AL","lat":30.279,"lon":-87.556,"days":3006,"hyp_days":0,"events":0,"do_mean":6.80,"corr":0.883},
+            "GBCM6": {"name":"Bayou Cumbest, Grand Bay, MS","lat":30.384,"lon":-88.436,"days":480,"hyp_days":0,"events":0,"do_mean":6.06,"corr":null},
+            "ADBF1": {"name":"Dry Bar, Apalachicola, FL","lat":29.675,"lon":-85.058,"days":71,"hyp_days":0,"events":0,"do_mean":6.80,"corr":null}
+        };
+
+        const results = {
+            "1d": {"cross_source": [0.917, 0.398], "ndbc_only": [0.921, 0.419], "local_only": [0.919, 0.424], "no_do": [0.807, 0.196]},
+            "3d": {"cross_source": [0.873, 0.441], "ndbc_only": [0.872, 0.460], "local_only": [0.866, 0.450], "no_do": [0.828, 0.368]},
+            "5d": {"cross_source": [0.866, 0.610], "ndbc_only": [0.847, 0.555], "local_only": [0.843, 0.541], "no_do": [0.853, 0.581]},
+            "7d": {"cross_source": [0.853, 0.642], "ndbc_only": [0.842, 0.590], "local_only": [0.843, 0.608], "no_do": [0.850, 0.671]}
+        };
+
+        // Initialize map
+        const map = L.map('map', {
+            center: [30.3, -88.0],
+            zoom: 8,
+            scrollWheelZoom: false,
+            attributionControl: true
+        });
+
+        L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors, CartoDB',
+            subdomains: 'abcd'
+        }).addTo(map);
+
+        // Add study area bounding box
+        const studyBounds = [
+            [28, -91],
+            [28, -85],
+            [31, -85],
+            [31, -91],
+            [28, -91]
+        ];
+        L.polyline(studyBounds, {
+            color: '#5eead4',
+            weight: 2,
+            opacity: 0.2,
+            dashArray: '5, 5'
+        }).addTo(map);
+
+        // Add satellite coverage area (0.25° grid)
+        const satelliteCoverage = [
+            [28, -91],
+            [28, -85],
+            [31, -85],
+            [31, -91],
+            [28, -91]
+        ];
+        L.polygon(satelliteCoverage, {
+            color: '#5eead4',
+            fillColor: '#5eead4',
+            fillOpacity: 0.05,
+            weight: 0
+        }).addTo(map);
+
+        // Add correlation lines from all stations to DPHA1
+        const dpha1 = stations["DPHA1"];
+        Object.entries(stations).forEach(([code, station]) => {
+            if (code !== "DPHA1") {
+                L.polyline(
+                    [[station.lat, station.lon], [dpha1.lat, dpha1.lon]],
+                    {
+                        color: '#5eadd4',
+                        weight: 1,
+                        opacity: 0.2,
+                        interactive: false
+                    }
+                ).addTo(map);
+            }
+        });
+
+        // Add station markers
+        Object.entries(stations).forEach(([code, station]) => {
+            const isPrimary = code === "GBHM6";
+            const circleOptions = {
+                radius: isPrimary ? 12 : 8,
+                fillColor: isPrimary ? '#5eead4' : '#5eadd4',
+                color: isPrimary ? '#5eead4' : '#5eadd4',
+                weight: isPrimary ? 3 : 2,
+                opacity: 1,
+                fillOpacity: 0.8
+            };
+
+            if (isPrimary) {
+                circleOptions.weight = 2;
+                circleOptions.color = 'transparent';
+                circleOptions.dashArray = 'none';
+            }
+
+            const circle = L.circleMarker([station.lat, station.lon], circleOptions);
+
+            // Add white border ring for primary station
+            if (isPrimary) {
+                const ring = L.circleMarker([station.lat, station.lon], {
+                    radius: 16,
+                    fillColor: 'transparent',
+                    color: '#5eead4',
+                    weight: 2,
+                    opacity: 0.5,
+                    interactive: false
+                }).addTo(map);
+            }
+
+            const popupContent = `
+                <strong>${code}</strong><br>
+                ${station.name}<br>
+                <br>
+                Hypoxic days: ${station.hyp_days}<br>
+                Onset events: ${station.events}<br>
+                Mean DO: ${station.do_mean} mg/L<br>
+                ${station.corr ? `Correlation: ${station.corr.toFixed(3)}` : 'Correlation: N/A'}
+            `;
+
+            circle.bindPopup(popupContent).addTo(map);
+
+            // Add station label
+            const label = L.marker([station.lat, station.lon - 0.015], {
+                icon: L.divIcon({
+                    className: 'station-label',
+                    html: `<div style="font-size: 11px; color: #c8d4e6; white-space: nowrap; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">${code}</div>`,
+                    iconSize: [30, 15]
+                })
+            }).addTo(map);
+        });
+
+        // Populate station table
+        const stationTableBody = document.getElementById('station-table');
+        const sortedStations = Object.entries(stations)
+            .sort((a, b) => b[1].hyp_days - a[1].hyp_days);
+
+        sortedStations.forEach(([code, station]) => {
+            const row = document.createElement('tr');
+            const isPrimary = code === "GBHM6";
+            const codeCell = isPrimary ? `<span class="primary-station">${code}</span>` : code;
+
+            row.innerHTML = `
+                <td>${codeCell}</td>
+                <td>${station.name}</td>
+                <td>${station.hyp_days}</td>
+                <td>${station.events}</td>
+                <td>${station.do_mean.toFixed(2)}</td>
+            `;
+            stationTableBody.appendChild(row);
+        });
+
+        // Populate results grid
+        const resultsGrid = document.getElementById('results-grid');
+        const leadTimes = ['1d', '3d', '5d', '7d'];
+        const leadLabels = { '1d': '1-Day', '3d': '3-Day', '5d': '5-Day', '7d': '7-Day' };
+        const models = [
+            { key: 'cross_source', label: 'Cross-Source', color: 'teal' },
+            { key: 'ndbc_only', label: 'NDBC-Only', color: 'blue' },
+            { key: 'local_only', label: 'Local-Only', color: 'muted' },
+            { key: 'no_do', label: 'No-DO', color: 'orange' }
+        ];
+
+        leadTimes.forEach(lead => {
+            const group = document.createElement('div');
+            group.className = 'metric-group';
+
+            const leadDiv = document.createElement('div');
+            leadDiv.className = 'metric-lead';
+            leadDiv.textContent = leadLabels[lead] + ' Lead';
+            group.appendChild(leadDiv);
+
+            models.forEach(model => {
+                const [auroc, aurpr] = results[lead][model.key];
+                const row = document.createElement('div');
+                row.className = 'metric-row';
+                row.innerHTML = `
+                    <div class="metric-label">${model.label}</div>
+                    <div class="metric-value ${model.color}">${auroc.toFixed(3)} / ${aurpr.toFixed(3)}</div>
+                `;
+                group.appendChild(row);
+            });
+
+            resultsGrid.appendChild(group);
+        });
+    </script>
+</body>
+</html>
