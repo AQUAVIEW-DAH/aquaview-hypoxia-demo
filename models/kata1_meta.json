@@ -1,40 +1,51 @@
 {
   "station_id": "kata1",
   "cross_station_ids": [
-    "42031",
-    "42067",
     "adbf1",
+    "apqf1",
+    "bbnf1",
+    "bbsf1",
+    "bphf1",
     "bsca1",
+    "camf1",
+    "clbf1",
     "crta1",
+    "cwqt2",
     "dpha1",
+    "frkf1",
     "gbcm6",
     "gbhm6",
     "gdqm6",
+    "gtqf1",
+    "maqt2",
     "mbla1",
     "mhpa1",
+    "mqmt2",
+    "mwqt2",
     "ppta1",
+    "rkqf1",
     "wkqa1"
   ],
   "metrics": {
     "1": {
-      "auc_roc": 0.9285,
-      "auc_pr": 0.2671,
-      "f1": 0.3529
+      "auc_roc": 0.9418,
+      "auc_pr": 0.2784,
+      "f1": 0.3636
     },
     "3": {
-      "auc_roc": 0.8087,
-      "auc_pr": 0.2646,
-      "f1": 0.3297
+      "auc_roc": 0.7369,
+      "auc_pr": 0.2215,
+      "f1": 0.2689
     },
     "5": {
-      "auc_roc": 0.7742,
-      "auc_pr": 0.2441,
-      "f1": 0.3298
+      "auc_roc": 0.7427,
+      "auc_pr": 0.2401,
+      "f1": 0.3304
     },
     "7": {
-      "auc_roc": 0.8079,
-      "auc_pr": 0.4063,
-      "f1": 0.4891
+      "auc_roc": 0.7922,
+      "auc_pr": 0.4234,
+      "f1": 0.4677
     }
   },
   "n_events": 43,

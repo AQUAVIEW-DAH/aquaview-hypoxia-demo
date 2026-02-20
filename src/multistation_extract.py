@@ -48,7 +48,7 @@ OUT_DIR.mkdir(exist_ok=True)
 AQUAVIEW_API = "https://aquaview-sfeos-1025757962819.us-east1.run.app"
 
 # ─── Study Area ──────────────────────────────────────────────────────────────
-BBOX = {"west": -91.0, "south": 28.0, "east": -85.0, "north": 31.0}
+BBOX = {"west": -98.0, "south": 25.0, "east": -80.0, "north": 31.0}
 
 # CoastWatch ERDDAP base (fallback when AQUAVIEW asset URL is not usable)
 COASTWATCH_ERDDAP_BASE = "https://coastwatch.noaa.gov/erddap/griddap"
@@ -77,13 +77,16 @@ WOD_YEARS = [2020, 2021, 2022, 2023, 2024]
 # AQUAVIEW API Client
 # ═════════════════════════════════════════════════════════════════════════════
 
-def aquaview_search(collection=None, q=None, bbox=None, limit=100):
+def aquaview_search(collection=None, q=None, bbox=None, limit=100, paginate_all=False):
     """
     Search AQUAVIEW STAC catalog.
 
     API: GET /search
     Params: collections, bbox, q, limit
     Returns: (numberMatched, [features])
+
+    If paginate_all=True, follows next_token to retrieve ALL matching items
+    (not just the first page).
     """
     params = {"limit": limit}
     if q:
@@ -94,14 +97,46 @@ def aquaview_search(collection=None, q=None, bbox=None, limit=100):
         params["collections"] = collection
 
     url = f"{AQUAVIEW_API}/search"
-    try:
-        r = requests.get(url, params=params, timeout=30)
-        r.raise_for_status()
-        data = r.json()
-        return data.get("numberMatched", 0), data.get("features", [])
-    except Exception as e:
-        print(f"  AQUAVIEW search failed: {e}")
-        return 0, []
+    all_features = []
+    n_matched = 0
+    page = 1
+
+    while True:
+        try:
+            r = requests.get(url, params=params, timeout=30)
+            r.raise_for_status()
+            data = r.json()
+        except Exception as e:
+            print(f"  AQUAVIEW search failed: {e}")
+            return n_matched, all_features
+
+        n_matched = data.get("numberMatched", 0)
+        features = data.get("features", [])
+        all_features.extend(features)
+        print(f"  Page {page}: {len(features)} items (total so far: {len(all_features)}/{n_matched})")
+
+        if not paginate_all:
+            break
+
+        next_token = data.get("next", None)
+        if next_token is None:
+            # Also check context.next or links
+            links = data.get("links", [])
+            next_link = [l for l in links if l.get("rel") == "next"]
+            if next_link:
+                # Parse token from next link URL
+                import urllib.parse
+                parsed = urllib.parse.urlparse(next_link[0]["href"])
+                qs = urllib.parse.parse_qs(parsed.query)
+                next_token = qs.get("token", [None])[0]
+
+        if not next_token or len(features) == 0:
+            break
+
+        params["token"] = next_token
+        page += 1
+
+    return n_matched, all_features
 
 
 def aquaview_get_item(collection_id, item_id):
@@ -130,31 +165,70 @@ def discover_ndbc_stations():
     Use AQUAVIEW to discover NDBC stations with dissolved oxygen in our study area.
 
     Flow:
-      1. Search AQUAVIEW (collection=NDBC, bbox=study area)
+      1. Search AQUAVIEW (collection=NDBC, bbox=study area, paginate_all=True)
       2. Filter results for stations with dissolved_oxygen in aquaview:variables
       3. Get item details for each → extract OPeNDAP asset URLs
       4. Return a station registry with all metadata and data URLs from AQUAVIEW
+
+    Fallback: If AQUAVIEW is unreachable, loads from station_data/aquaview_discovery_cache.json
+    (pre-built via AQUAVIEW MCP tools).
     """
     print("\n[AQUAVIEW] Searching for NDBC stations with dissolved oxygen...")
     print(f"  API: GET {AQUAVIEW_API}/search")
     print(f"  Params: collections=NDBC, bbox={BBOX}")
 
-    n_total, features = aquaview_search(collection="NDBC", bbox=BBOX, limit=100)
+    n_total, features = aquaview_search(
+        collection="NDBC", bbox=BBOX, limit=100, paginate_all=True
+    )
     print(f"  Total NDBC stations in study area: {n_total}")
 
     # Filter for stations with dissolved_oxygen
-    do_station_ids = []
+    do_features = []
     for f in features:
         props = f.get("properties", {})
         avars = props.get("aquaview:variables", [])
         if "dissolved_oxygen" in avars:
-            do_station_ids.append(f["id"])
+            do_features.append(f)
 
-    print(f"  Stations with dissolved_oxygen: {len(do_station_ids)}")
+    print(f"  Stations with dissolved_oxygen: {len(do_features)}")
+
+    # If AQUAVIEW returned nothing, try loading from cache
+    if len(do_features) == 0:
+        cache_path = OUT_DIR / "aquaview_discovery_cache.json"
+        if cache_path.exists():
+            print(f"\n  [FALLBACK] Loading station list from {cache_path}")
+            with open(cache_path) as fh:
+                cache = json.load(fh)
+            print(f"  Cache from {cache.get('generated', '?')}: "
+                  f"{cache['total_stations']} DO stations")
+            # Build station registry from cache (no AQUAVIEW get_item needed)
+            stations = {}
+            for s in cache["stations"]:
+                sid = s["id"]
+                # Build OPeNDAP URL from known NDBC THREDDS pattern
+                opendap_base = (f"https://dods.ndbc.noaa.gov/thredds/dodsC/"
+                                f"data/ocean/{sid}/{sid}o9999.nc")
+                stations[sid] = {
+                    "name": sid.upper(),
+                    "lat": s["lat"],
+                    "lon": s["lon"],
+                    "institution": "NDBC",
+                    "aquaview_item_id": f"ndbc_{sid}",
+                    "aquaview_variables": s.get("variables", []),
+                    "opendap_urls": [opendap_base],
+                    "aquaview_source_url": "",
+                    "has_rt_ocean": s.get("has_rt_ocean", False),
+                }
+                print(f"    {sid.upper()}: ({s['lat']:.3f}°N, {s['lon']:.3f}°W)"
+                      f"{' [rt_ocean]' if s.get('has_rt_ocean') else ''}")
+            return stations, cache["total_stations"]
+        else:
+            print("  *** No cache file found. Check AQUAVIEW API connectivity. ***")
 
     # Now get full item details for each DO station → extract asset URLs
     stations = {}
-    for item_id in do_station_ids:
+    for f in do_features:
+        item_id = f["id"]
         print(f"\n  [AQUAVIEW] GET /collections/NDBC/items/{item_id}")
         item = aquaview_get_item("NDBC", item_id)
         if item is None:
@@ -170,6 +244,7 @@ def discover_ndbc_stations():
         # Extract OPeNDAP URLs from AQUAVIEW assets
         # AQUAVIEW provides fileServer URLs; we convert to dodsC for xarray OPeNDAP
         opendap_urls = []
+        has_rt = "rt_ocean" in assets
         for asset_key, asset in assets.items():
             if asset_key.startswith("od_ocean_"):
                 href = asset["href"]
@@ -196,10 +271,12 @@ def discover_ndbc_stations():
             "aquaview_variables": props.get("aquaview:variables", []),
             "opendap_urls": sorted(opendap_urls),  # from AQUAVIEW assets
             "aquaview_source_url": props.get("aquaview:source_url", ""),
+            "has_rt_ocean": has_rt,
         }
         print(f"    {sid.upper()}: {stations[sid]['name']} "
               f"({lat:.3f}°N, {lon:.3f}°W) — "
-              f"{len(opendap_urls)} data files from AQUAVIEW assets")
+              f"{len(opendap_urls)} data files from AQUAVIEW assets"
+              f"{' [rt_ocean]' if has_rt else ''}")
 
     return stations, n_total
 

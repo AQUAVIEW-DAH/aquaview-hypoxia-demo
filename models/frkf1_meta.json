@@ -1,17 +1,17 @@
 {
-  "station_id": "bsca1",
+  "station_id": "frkf1",
   "cross_station_ids": [
     "adbf1",
     "apqf1",
     "bbnf1",
     "bbsf1",
     "bphf1",
+    "bsca1",
     "camf1",
     "clbf1",
     "crta1",
     "cwqt2",
     "dpha1",
-    "frkf1",
     "gbcm6",
     "gbhm6",
     "gdqm6",
@@ -28,33 +28,33 @@
   ],
   "metrics": {
     "1": {
-      "auc_roc": 0.9444,
-      "auc_pr": 0.2792,
-      "f1": 0.3415
+      "auc_roc": 0,
+      "auc_pr": 0,
+      "f1": 0.0
     },
     "3": {
-      "auc_roc": 0.8341,
-      "auc_pr": 0.2717,
-      "f1": 0.3846
+      "auc_roc": 0,
+      "auc_pr": 0,
+      "f1": 0.0
     },
     "5": {
-      "auc_roc": 0.7527,
-      "auc_pr": 0.3219,
-      "f1": 0.4034
+      "auc_roc": 0,
+      "auc_pr": 0,
+      "f1": 0.0
     },
     "7": {
-      "auc_roc": 0.7828,
-      "auc_pr": 0.3195,
-      "f1": 0.3422
+      "auc_roc": 0,
+      "auc_pr": 0,
+      "f1": 0.0
     }
   },
-  "n_events": 47,
-  "n_days": 3576,
+  "n_events": 31,
+  "n_days": 616,
   "date_range": [
-    "2010-09-01",
-    "2021-03-09"
+    "2009-01-01",
+    "2010-11-30"
   ],
-  "split_date": "2018-01-11",
+  "split_date": "2010-05-04",
   "lead_times": [
     1,
     3,

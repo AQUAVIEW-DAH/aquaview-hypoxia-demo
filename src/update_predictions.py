@@ -43,7 +43,7 @@ AQUAVIEW_API = "https://aquaview-sfeos-1025757962819.us-east1.run.app"
 
 # ─── AQUAVIEW Discovery ──────────────────────────────────────────────────────
 
-def discover_realtime_stations(bbox="-91,28,-85,31"):
+def discover_realtime_stations(bbox="-98,25,-80,31"):
     """
     Query AQUAVIEW STAC API to discover which NDBC stations in the study area
     have active realtime ocean feeds (rt_ocean asset).
@@ -87,7 +87,7 @@ def discover_realtime_stations(bbox="-91,28,-85,31"):
         # Paginate to get all stations
         next_token = data.get('next_token') or data.get('token')
         page = 1
-        while next_token and len(items) < 200:
+        while next_token and len(items) < 500:
             page += 1
             try:
                 body['token'] = next_token
@@ -342,7 +342,7 @@ FALLBACK_CHL = {'dataset': 'noaacwS3BOLCIchlaDaily',
                 'variable': 'chlor_a'}
 
 # Study area bounding box (same as original pipeline)
-BBOX = {'south': 28.0, 'north': 31.0, 'west': -91.0, 'east': -85.0}
+BBOX = {'south': 25.0, 'north': 31.0, 'west': -98.0, 'east': -80.0}
 
 
 def _parse_erddap_csv(text, col_map):

@@ -1,47 +1,58 @@
 {
   "station_id": "gbhm6",
   "cross_station_ids": [
-    "42031",
-    "42067",
     "adbf1",
+    "apqf1",
+    "bbnf1",
+    "bbsf1",
+    "bphf1",
     "bsca1",
+    "camf1",
+    "clbf1",
     "crta1",
+    "cwqt2",
     "dpha1",
+    "frkf1",
     "gbcm6",
     "gdqm6",
+    "gtqf1",
     "kata1",
+    "maqt2",
     "mbla1",
     "mhpa1",
+    "mqmt2",
+    "mwqt2",
     "ppta1",
+    "rkqf1",
     "wkqa1"
   ],
   "metrics": {
     "1": {
-      "auc_roc": 0.9307,
-      "auc_pr": 0.3685,
-      "f1": 0.4762
+      "auc_roc": 0,
+      "auc_pr": 0,
+      "f1": 0.0
     },
     "3": {
-      "auc_roc": 0.8702,
-      "auc_pr": 0.4746,
-      "f1": 0.494
+      "auc_roc": 0,
+      "auc_pr": 0,
+      "f1": 0.0
     },
     "5": {
-      "auc_roc": 0.8633,
-      "auc_pr": 0.606,
-      "f1": 0.5607
+      "auc_roc": 0,
+      "auc_pr": 0,
+      "f1": 0.0
     },
     "7": {
-      "auc_roc": 0.8549,
-      "auc_pr": 0.6583,
-      "f1": 0.6369
+      "auc_roc": 0,
+      "auc_pr": 0,
+      "f1": 0.0
     }
   },
   "n_events": 100,
-  "n_days": 2463,
+  "n_days": 5995,
   "date_range": [
     "2018-12-12",
-    "2026-02-19"
+    "2026-02-20"
   ],
   "split_date": "2023-12-24",
   "lead_times": [

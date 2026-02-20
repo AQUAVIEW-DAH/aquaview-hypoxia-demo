@@ -1,40 +1,51 @@
 {
   "station_id": "mbla1",
   "cross_station_ids": [
-    "42031",
-    "42067",
     "adbf1",
+    "apqf1",
+    "bbnf1",
+    "bbsf1",
+    "bphf1",
     "bsca1",
+    "camf1",
+    "clbf1",
     "crta1",
+    "cwqt2",
     "dpha1",
+    "frkf1",
     "gbcm6",
     "gbhm6",
     "gdqm6",
+    "gtqf1",
     "kata1",
+    "maqt2",
     "mhpa1",
+    "mqmt2",
+    "mwqt2",
     "ppta1",
+    "rkqf1",
     "wkqa1"
   ],
   "metrics": {
     "1": {
-      "auc_roc": 0.6833,
-      "auc_pr": 0.1769,
+      "auc_roc": 0.6975,
+      "auc_pr": 0.1759,
       "f1": 0.2222
     },
     "3": {
-      "auc_roc": 0.6709,
-      "auc_pr": 0.1083,
-      "f1": 0.1154
+      "auc_roc": 0.5555,
+      "auc_pr": 0.0752,
+      "f1": 0.0588
     },
     "5": {
-      "auc_roc": 0.746,
-      "auc_pr": 0.225,
-      "f1": 0.3273
+      "auc_roc": 0.7327,
+      "auc_pr": 0.2203,
+      "f1": 0.1081
     },
     "7": {
-      "auc_roc": 0.6948,
-      "auc_pr": 0.212,
-      "f1": 0.0755
+      "auc_roc": 0.6461,
+      "auc_pr": 0.1566,
+      "f1": 0.0
     }
   },
   "n_events": 22,
