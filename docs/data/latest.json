@@ -1,24 +1,7 @@
 {
-  "updated": "2026-02-20T14:35:22Z",
+  "updated": "2026-02-20T15:01:02Z",
   "update_interval_hours": 6,
   "stations": [
-    {
-      "id": "GDQM6",
-      "name": "Bangs Lake, Grand Bay Reserve, MS",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": 7.41,
-        "temp": 21.3,
-        "sal": 26.9
-      },
-      "last_observation": "2026-02-20",
-      "days_of_data": 46,
-      "currently_hypoxic": false,
-      "lat": 30.357,
-      "lon": -88.463
-    },
     {
       "id": "BSCA1",
       "name": "Bon Secour, AL",
@@ -40,6 +23,23 @@
       "predictions": null,
       "lat": 30.437,
       "lon": -88.011
+    },
+    {
+      "id": "GDQM6",
+      "name": "Bangs Lake, Grand Bay Reserve, MS",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": 7.41,
+        "temp": 21.3,
+        "sal": 26.9
+      },
+      "last_observation": "2026-02-20",
+      "days_of_data": 46,
+      "currently_hypoxic": false,
+      "lat": 30.357,
+      "lon": -88.463
     },
     {
       "id": "GBCM6",
@@ -65,7 +65,7 @@
       "has_realtime": true,
       "status": "active",
       "current": {
-        "do": 9.11,
+        "do": 9.04,
         "temp": 19.5,
         "sal": 22.7
       },
