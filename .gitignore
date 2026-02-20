@@ -11,7 +11,11 @@ build/
 station_data/
 *.csv
 *.nc
+
+# Ignore JSON in root/src (generated data) but allow in models/ and docs/
 *.json
+!models/*.json
+!docs/**/*.json
 !requirements.txt
 
 # Environment

@@ -1,0 +1,155 @@
+{
+  "updated": "2026-02-20T14:35:22Z",
+  "update_interval_hours": 6,
+  "stations": [
+    {
+      "id": "GDQM6",
+      "name": "Bangs Lake, Grand Bay Reserve, MS",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": 7.41,
+        "temp": 21.3,
+        "sal": 26.9
+      },
+      "last_observation": "2026-02-20",
+      "days_of_data": 46,
+      "currently_hypoxic": false,
+      "lat": 30.357,
+      "lon": -88.463
+    },
+    {
+      "id": "BSCA1",
+      "name": "Bon Secour, AL",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "lat": 30.329,
+      "lon": -87.829
+    },
+    {
+      "id": "MBLA1",
+      "name": "Middle Bay Lighthouse, AL",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "lat": 30.437,
+      "lon": -88.011
+    },
+    {
+      "id": "GBCM6",
+      "name": "Bayou Cumbest, Grand Bay Reserve, MS",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": 7.33,
+        "temp": 19.7,
+        "sal": 28.3
+      },
+      "last_observation": "2026-02-12",
+      "days_of_data": 3,
+      "currently_hypoxic": false,
+      "lat": 30.384,
+      "lon": -88.436
+    },
+    {
+      "id": "ADBF1",
+      "name": "Dry Bar, Apalachicola Reserve, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": 9.11,
+        "temp": 19.5,
+        "sal": 22.7
+      },
+      "last_observation": "2026-02-20",
+      "days_of_data": 13,
+      "currently_hypoxic": false,
+      "lat": 29.675,
+      "lon": -85.058
+    },
+    {
+      "id": "GBHM6",
+      "name": "Bayou Heron, Grand Bay Reserve, MS",
+      "has_model": true,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": 4.59,
+        "temp": 20.3,
+        "sal": 21.1
+      },
+      "last_observation": "2026-02-20",
+      "days_of_data": 46,
+      "currently_hypoxic": false,
+      "predictions": {
+        "1d": {
+          "prob": 0.0173,
+          "risk": "low"
+        },
+        "3d": {
+          "prob": 0.128,
+          "risk": "low"
+        },
+        "5d": {
+          "prob": 0.1472,
+          "risk": "low"
+        },
+        "7d": {
+          "prob": 0.1072,
+          "risk": "low"
+        }
+      },
+      "metrics": {
+        "1": {
+          "auc_roc": 0.9307,
+          "auc_pr": 0.3685,
+          "f1": 0.4762
+        },
+        "3": {
+          "auc_roc": 0.8702,
+          "auc_pr": 0.4746,
+          "f1": 0.494
+        },
+        "5": {
+          "auc_roc": 0.8633,
+          "auc_pr": 0.606,
+          "f1": 0.5607
+        },
+        "7": {
+          "auc_roc": 0.8549,
+          "auc_pr": 0.6583,
+          "f1": 0.6369
+        }
+      },
+      "lat": 30.418,
+      "lon": -88.405
+    },
+    {
+      "id": "KATA1",
+      "name": "Katrina Cut, AL",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "lat": 30.258,
+      "lon": -88.213
+    }
+  ],
+  "summary": {
+    "total_stations": 7,
+    "stations_with_models": 4,
+    "stations_with_realtime": 4,
+    "stations_with_data": 4,
+    "stations_with_predictions": 1,
+    "stations_with_warnings": 0
+  }
+}

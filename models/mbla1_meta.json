@@ -1,0 +1,53 @@
+{
+  "station_id": "mbla1",
+  "cross_station_ids": [
+    "42031",
+    "42067",
+    "adbf1",
+    "bsca1",
+    "crta1",
+    "dpha1",
+    "gbcm6",
+    "gbhm6",
+    "gdqm6",
+    "kata1",
+    "mhpa1",
+    "ppta1",
+    "wkqa1"
+  ],
+  "metrics": {
+    "1": {
+      "auc_roc": 0.6833,
+      "auc_pr": 0.1769,
+      "f1": 0.2222
+    },
+    "3": {
+      "auc_roc": 0.6709,
+      "auc_pr": 0.1083,
+      "f1": 0.1154
+    },
+    "5": {
+      "auc_roc": 0.746,
+      "auc_pr": 0.225,
+      "f1": 0.3273
+    },
+    "7": {
+      "auc_roc": 0.6948,
+      "auc_pr": 0.212,
+      "f1": 0.0755
+    }
+  },
+  "n_events": 22,
+  "n_days": 2365,
+  "date_range": [
+    "2009-08-01",
+    "2019-02-12"
+  ],
+  "split_date": "2016-04-03",
+  "lead_times": [
+    1,
+    3,
+    5,
+    7
+  ]
+}
