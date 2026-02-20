@@ -1,0 +1,44 @@
+name: Update Hypoxia Predictions
+
+on:
+  schedule:
+    # Every 6 hours: 0:00, 6:00, 12:00, 18:00 UTC
+    - cron: '0 0,6,12,18 * * *'
+  workflow_dispatch:  # Manual trigger from GitHub UI
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -q -r requirements.txt
+
+      - name: Run prediction update
+        working-directory: src
+        run: python update_predictions.py
+
+      - name: Commit updated predictions
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+
+          git add docs/data/latest.json docs/data/history/
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update predictions: $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          fi

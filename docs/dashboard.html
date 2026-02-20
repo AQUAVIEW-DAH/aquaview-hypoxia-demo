@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gulf Hypoxia Dashboard — Live Onset Predictions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-alt: #f8f9fb;
+            --bg-card: #ffffff;
+            --border: #e5e7eb;
+            --border-light: #f0f1f3;
+            --text: #1a1a2e;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --accent: #0c6e8c;
+            --accent-light: #e8f4f8;
+            --accent-dark: #064e63;
+            --teal: #0d9488;
+            --teal-light: #ccfbf1;
+            --orange: #c2410c;
+            --orange-light: #fff7ed;
+            --red: #dc2626;
+            --red-light: #fef2f2;
+            --green: #16a34a;
+            --green-light: #f0fdf4;
+            --yellow: #ca8a04;
+            --yellow-light: #fefce8;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+            --radius: 10px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-alt);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            font-size: 15px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ─── Header ─── */
+        .header {
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .header h1 {
+            font-size: 1.25em;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        .header-badge {
+            font-size: 0.7em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--accent);
+            background: var(--accent-light);
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.85em;
+            color: var(--text-muted);
+        }
+        .header-right a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .header-right a:hover { text-decoration: underline; }
+        .update-time { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
+
+        /* ─── Layout ─── */
+        .main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            grid-template-rows: auto auto 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 900px) {
+            .main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ─── Summary Bar ─── */
+        .summary-bar {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .summary-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            flex: 1;
+            min-width: 180px;
+            box-shadow: var(--shadow-sm);
+        }
+        .summary-card .label {
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+        .summary-card .value {
+            font-size: 1.5em;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        .summary-card .sub {
+            font-size: 0.8em;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* ─── Map ─── */
+        .map-container {
+            grid-column: 1 / -1;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        #map { height: 380px; width: 100%; }
+        .leaflet-popup-content-wrapper {
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+        }
+        .popup-station { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+        .popup-do { font-family: 'JetBrains Mono', monospace; }
+        .popup-risk {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-top: 4px;
+        }
+        .risk-low { background: var(--green-light); color: var(--green); }
+        .risk-moderate { background: var(--yellow-light); color: var(--yellow); }
+        .risk-high { background: var(--red-light); color: var(--red); }
+        .risk-none { background: var(--bg-alt); color: var(--text-muted); }
+
+        /* ─── Station Table ─── */
+        .station-table-wrap {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        .table-header {
+            padding: 16px 20px 12px;
+            border-bottom: 1px solid var(--border-light);
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85em;
+        }
+        thead th {
+            text-align: left;
+            padding: 10px 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+        }
+        thead th:hover { color: var(--accent); }
+        tbody tr {
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+        tbody tr:hover { background: var(--bg-alt); }
+        tbody tr.selected { background: var(--accent-light); }
+        tbody td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border-light);
+            white-space: nowrap;
+        }
+        .td-prob {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            font-size: 0.9em;
+        }
+        .td-station { font-weight: 600; }
+        .td-do { font-family: 'JetBrains Mono', monospace; }
+
+        /* ─── Detail Panel ─── */
+        .detail-panel {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            position: sticky;
+            top: 80px;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+        }
+        .detail-panel.empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-style: italic;
+            min-height: 200px;
+        }
+        .detail-header {
+            margin-bottom: 20px;
+        }
+        .detail-header h2 {
+            font-size: 1.1em;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+        .detail-header .coords {
+            font-size: 0.8em;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .detail-header .status-badge {
+            display: inline-block;
+            margin-top: 6px;
+        }
+
+        /* Current conditions */
+        .current-conditions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .condition-card {
+            background: var(--bg-alt);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+        .condition-card .val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        .condition-card .unit {
+            font-size: 0.7em;
+            color: var(--text-muted);
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* Forecast cards */
+        .forecast-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .forecast-card {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px;
+        }
+        .forecast-card .lead-label {
+            font-size: 0.7em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+        .forecast-card .prob-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.6em;
+            font-weight: 700;
+            line-height: 1;
+        }
+        .forecast-card .prob-bar {
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        .forecast-card .prob-bar .fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+        .no-model-note {
+            background: var(--bg-alt);
+            border-radius: 8px;
+            padding: 16px;
+            color: var(--text-secondary);
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+
+        /* Model info */
+        .model-info {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-light);
+            font-size: 0.8em;
+            color: var(--text-muted);
+        }
+        .model-info dt { font-weight: 600; display: inline; }
+        .model-info dd { display: inline; margin-left: 4px; margin-right: 12px; }
+
+        /* ─── Caveat Banner ─── */
+        .caveat-banner {
+            grid-column: 1 / -1;
+            background: var(--orange-light);
+            border: 1px solid #fed7aa;
+            border-radius: var(--radius);
+            padding: 14px 20px;
+            font-size: 0.82em;
+            color: #92400e;
+            line-height: 1.5;
+        }
+        .caveat-banner strong { font-weight: 600; }
+
+        /* ─── Footer ─── */
+        .footer {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 24px;
+            font-size: 0.8em;
+            color: var(--text-muted);
+        }
+        .footer a { color: var(--accent); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* ─── Loading State ─── */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+            color: var(--text-muted);
+            grid-column: 1 / -1;
+        }
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-right: 10px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ─── Error State ─── */
+        .error-banner {
+            grid-column: 1 / -1;
+            background: var(--red-light);
+            border: 1px solid #fecaca;
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            color: #991b1b;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-inner">
+        <div class="header-left">
+            <h1>Gulf Hypoxia Dashboard</h1>
+            <span class="header-badge">Research Preview</span>
+        </div>
+        <div class="header-right">
+            <span>Updated <span class="update-time" id="update-time">loading...</span></span>
+            <a href="index.html">Read the analysis</a>
+            <a href="https://github.com/AQUAVIEW-DAH/aquaview-hypoxia-demo" target="_blank">GitHub</a>
+        </div>
+    </div>
+</div>
+
+<div class="main" id="app">
+    <div class="loading" id="loading-state">
+        <div class="spinner"></div>
+        Loading predictions...
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+(function() {
+    'use strict';
+
+    const DATA_URL = 'data/latest.json';
+    const REFRESH_INTERVAL = 5 * 60 * 1000; // 5 minutes
+
+    let data = null;
+    let map = null;
+    let markers = {};
+    let selectedStation = null;
+
+    // ─── Risk Colors ─────────────────────────────────────────────
+    function riskColor(prob) {
+        if (prob == null) return '#9ca3af';
+        if (prob < 0.3) return '#16a34a';
+        if (prob < 0.6) return '#ca8a04';
+        return '#dc2626';
+    }
+    function riskClass(level) {
+        return 'risk-' + (level || 'none');
+    }
+
+    // ─── Time Formatting ─────────────────────────────────────────
+    function timeAgo(isoStr) {
+        const d = new Date(isoStr);
+        const now = new Date();
+        const mins = Math.floor((now - d) / 60000);
+        if (mins < 1) return 'just now';
+        if (mins < 60) return mins + 'm ago';
+        const hrs = Math.floor(mins / 60);
+        if (hrs < 24) return hrs + 'h ago';
+        return Math.floor(hrs / 24) + 'd ago';
+    }
+
+    // ─── Max Risk for a Station ──────────────────────────────────
+    function maxRisk(station) {
+        if (!station.predictions) return { prob: null, risk: 'none', lead: null };
+        let best = { prob: 0, risk: 'low', lead: null };
+        for (const [lead, pred] of Object.entries(station.predictions)) {
+            if (pred.prob > best.prob) {
+                best = { prob: pred.prob, risk: pred.risk, lead: lead };
+            }
+        }
+        return best;
+    }
+
+    // ─── Render ──────────────────────────────────────────────────
+    function render() {
+        const app = document.getElementById('app');
+
+        // Summary bar
+        const active = data.stations.filter(s => s.status === 'active').length;
+        const withModels = data.summary.stations_with_models;
+        const warnings = data.summary.stations_with_warnings;
+        const highestRisk = data.stations.reduce((a, b) => {
+            const aMax = maxRisk(a).prob || 0;
+            const bMax = maxRisk(b).prob || 0;
+            return aMax > bMax ? a : b;
+        }, data.stations[0]);
+
+        app.innerHTML = `
+            <div class="summary-bar">
+                <div class="summary-card">
+                    <div class="label">Active Stations</div>
+                    <div class="value">${active}</div>
+                    <div class="sub">${withModels} with trained models</div>
+                </div>
+                <div class="summary-card">
+                    <div class="label">Stations at High Risk</div>
+                    <div class="value" style="color: ${warnings > 0 ? 'var(--red)' : 'var(--green)'}">${warnings}</div>
+                    <div class="sub">onset probability &ge; 60%</div>
+                </div>
+                <div class="summary-card">
+                    <div class="label">Highest Risk</div>
+                    <div class="value">${highestRisk ? highestRisk.id : '—'}</div>
+                    <div class="sub">${highestRisk && maxRisk(highestRisk).prob != null
+                        ? (maxRisk(highestRisk).prob * 100).toFixed(0) + '% at ' + maxRisk(highestRisk).lead
+                        : 'no predictions'}</div>
+                </div>
+                <div class="summary-card">
+                    <div class="label">Last Update</div>
+                    <div class="value update-time">${timeAgo(data.updated)}</div>
+                    <div class="sub">every ${data.update_interval_hours}h via GitHub Actions</div>
+                </div>
+            </div>
+
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+
+            <div class="station-table-wrap">
+                <div class="table-header">All Stations</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-sort="id">Station</th>
+                            <th data-sort="do">DO (mg/L)</th>
+                            <th data-sort="1d">1-day</th>
+                            <th data-sort="3d">3-day</th>
+                            <th data-sort="5d">5-day</th>
+                            <th data-sort="7d">7-day</th>
+                        </tr>
+                    </thead>
+                    <tbody id="station-tbody"></tbody>
+                </table>
+            </div>
+
+            <div class="detail-panel empty" id="detail-panel">
+                Click a station on the map or table to see details
+            </div>
+
+            <div class="caveat-banner">
+                <strong>Research demo, not an operational forecast.</strong>
+                Models are trained per-station on historical NDBC data. Only stations with active realtime
+                ocean feeds can show live predictions; some trained stations are currently offline.
+                Predictions update every ${data.update_interval_hours} hours.
+                See <a href="index.html" style="color: #92400e; text-decoration: underline;">the full analysis</a>
+                for methodology, literature context, and known limitations.
+            </div>
+
+            <div class="footer">
+                Built with <a href="https://aquaview.org">AQUAVIEW</a> &middot;
+                Data from NDBC + CoastWatch &middot;
+                <a href="https://github.com/AQUAVIEW-DAH/aquaview-hypoxia-demo">Source on GitHub</a>
+            </div>
+        `;
+
+        renderMap();
+        renderTable();
+
+        document.getElementById('update-time').textContent = timeAgo(data.updated);
+    }
+
+    // ─── Map ─────────────────────────────────────────────────────
+    function renderMap() {
+        if (map) { map.remove(); }
+
+        map = L.map('map', {
+            scrollWheelZoom: true,
+            zoomControl: true,
+        }).setView([29.6, -88.0], 7);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            maxZoom: 19,
+        }).addTo(map);
+
+        data.stations.forEach(station => {
+            if (!station.lat || !station.lon) return;
+
+            const risk = maxRisk(station);
+            const color = riskColor(risk.prob);
+            const doVal = station.current && station.current.do != null
+                ? station.current.do.toFixed(2) : '—';
+
+            const marker = L.circleMarker([station.lat, station.lon], {
+                radius: station.has_model ? 10 : 6,
+                color: color,
+                fillColor: color,
+                fillOpacity: station.has_model ? 0.7 : 0.3,
+                weight: station.has_model ? 2 : 1,
+            }).addTo(map);
+
+            let popupHtml = `<div class="popup-station">${station.id}</div>`;
+            popupHtml += `<div class="popup-do">DO: ${doVal} mg/L</div>`;
+            if (risk.prob != null) {
+                popupHtml += `<div class="popup-risk ${riskClass(risk.risk)}">${(risk.prob * 100).toFixed(0)}% onset (${risk.lead})</div>`;
+            } else {
+                popupHtml += `<div class="popup-risk risk-none">No model</div>`;
+            }
+
+            marker.bindPopup(popupHtml);
+            marker.on('click', () => selectStation(station.id));
+            markers[station.id] = marker;
+        });
+    }
+
+    // ─── Table ───────────────────────────────────────────────────
+    function renderTable() {
+        const tbody = document.getElementById('station-tbody');
+        if (!tbody) return;
+
+        const rows = data.stations.map(s => {
+            const doVal = s.current && s.current.do != null
+                ? s.current.do.toFixed(2) : '—';
+            const doColor = s.current && s.current.do != null && s.current.do <= 2.0
+                ? 'color: var(--red); font-weight: 700' : '';
+
+            function probCell(lead) {
+                if (!s.predictions || !s.predictions[lead]) return '<td class="td-prob" style="color: var(--text-muted)">—</td>';
+                const p = s.predictions[lead];
+                const color = riskColor(p.prob);
+                return `<td class="td-prob" style="color: ${color}">${(p.prob * 100).toFixed(0)}%</td>`;
+            }
+
+            return `<tr data-station="${s.id}" class="${selectedStation === s.id ? 'selected' : ''}"
+                        onclick="window._selectStation('${s.id}')">
+                <td class="td-station">${s.id}</td>
+                <td class="td-do" style="${doColor}">${doVal}</td>
+                ${probCell('1d')}
+                ${probCell('3d')}
+                ${probCell('5d')}
+                ${probCell('7d')}
+            </tr>`;
+        }).join('');
+
+        tbody.innerHTML = rows;
+
+        // Sort handlers
+        document.querySelectorAll('thead th[data-sort]').forEach(th => {
+            th.onclick = () => sortTable(th.dataset.sort);
+        });
+    }
+
+    let sortKey = '7d';
+    let sortAsc = false;
+
+    function sortTable(key) {
+        if (sortKey === key) { sortAsc = !sortAsc; }
+        else { sortKey = key; sortAsc = false; }
+
+        data.stations.sort((a, b) => {
+            let va, vb;
+            if (key === 'id') {
+                va = a.id; vb = b.id;
+                return sortAsc ? va.localeCompare(vb) : vb.localeCompare(va);
+            }
+            if (key === 'do') {
+                va = a.current && a.current.do != null ? a.current.do : -999;
+                vb = b.current && b.current.do != null ? b.current.do : -999;
+            } else {
+                va = a.predictions && a.predictions[key] ? a.predictions[key].prob : -1;
+                vb = b.predictions && b.predictions[key] ? b.predictions[key].prob : -1;
+            }
+            return sortAsc ? va - vb : vb - va;
+        });
+
+        renderTable();
+    }
+
+    // ─── Detail Panel ────────────────────────────────────────────
+    window._selectStation = function(stationId) {
+        selectStation(stationId);
+    };
+
+    function selectStation(stationId) {
+        selectedStation = stationId;
+        const station = data.stations.find(s => s.id === stationId);
+        if (!station) return;
+
+        // Highlight table row
+        document.querySelectorAll('tbody tr').forEach(tr => {
+            tr.classList.toggle('selected', tr.dataset.station === stationId);
+        });
+
+        // Highlight map marker
+        Object.entries(markers).forEach(([id, m]) => {
+            const risk = maxRisk(data.stations.find(s => s.id === id));
+            const color = riskColor(risk.prob);
+            if (id === stationId) {
+                m.setStyle({ weight: 4, color: '#1a1a2e', fillColor: color });
+            } else {
+                const s = data.stations.find(x => x.id === id);
+                m.setStyle({
+                    weight: s && s.has_model ? 2 : 1,
+                    color: color,
+                    fillColor: color,
+                });
+            }
+        });
+
+        const panel = document.getElementById('detail-panel');
+        panel.classList.remove('empty');
+
+        const doVal = station.current && station.current.do != null ? station.current.do.toFixed(2) : '—';
+        const tempVal = station.current && station.current.temp != null ? station.current.temp.toFixed(1) : '—';
+        const salVal = station.current && station.current.sal != null ? station.current.sal.toFixed(1) : '—';
+
+        let html = `
+            <div class="detail-header">
+                <h2>${station.id}</h2>
+                <div class="coords">${station.name || ''}</div>
+                ${station.lat ? `<div class="coords">${station.lat.toFixed(3)}&deg;N, ${Math.abs(station.lon).toFixed(3)}&deg;W</div>` : ''}
+                <span class="popup-risk ${station.currently_hypoxic ? 'risk-high' : riskClass(maxRisk(station).risk)} status-badge">
+                    ${station.currently_hypoxic ? 'Currently Hypoxic'
+                        : station.status === 'historical_only' ? 'Historical only'
+                        : station.has_model && station.predictions ? maxRisk(station).risk + ' risk'
+                        : station.status === 'active' ? 'Conditions only'
+                        : 'No data'}
+                </span>
+            </div>
+
+            <div class="current-conditions">
+                <div class="condition-card">
+                    <div class="val" style="${station.current && station.current.do != null && station.current.do <= 2.0 ? 'color: var(--red)' : ''}">${doVal}</div>
+                    <span class="unit">DO (mg/L)</span>
+                </div>
+                <div class="condition-card">
+                    <div class="val">${tempVal}</div>
+                    <span class="unit">Temp (&deg;C)</span>
+                </div>
+                <div class="condition-card">
+                    <div class="val">${salVal}</div>
+                    <span class="unit">Sal (psu)</span>
+                </div>
+            </div>
+        `;
+
+        if (station.predictions && Object.keys(station.predictions).length > 0) {
+            html += '<div class="forecast-grid">';
+            for (const lead of ['1d', '3d', '5d', '7d']) {
+                const pred = station.predictions[lead];
+                if (!pred) continue;
+                const pct = (pred.prob * 100).toFixed(0);
+                const color = riskColor(pred.prob);
+                html += `
+                    <div class="forecast-card">
+                        <div class="lead-label">${lead.replace('d', '-day')} onset</div>
+                        <div class="prob-value" style="color: ${color}">${pct}%</div>
+                        <div class="prob-bar"><div class="fill" style="width: ${pct}%; background: ${color}"></div></div>
+                    </div>
+                `;
+            }
+            html += '</div>';
+
+            if (station.metrics) {
+                html += '<div class="model-info"><dl>';
+                for (const [lead, m] of Object.entries(station.metrics)) {
+                    html += `<dt>${lead}d AUC-ROC:</dt><dd>${m.auc_roc}</dd>`;
+                }
+                html += '</dl></div>';
+            }
+        } else if (station.status === 'historical_only') {
+            html += `<div class="no-model-note">
+                This station has a trained model but no active realtime ocean data feed.
+                The station's NDBC sensor may be decommissioned or offline. Predictions will
+                resume if the realtime feed becomes available again.
+            </div>`;
+        } else {
+            html += `<div class="no-model-note">
+                This station does not have a trained onset prediction model, either because it has too few
+                historical hypoxic events or insufficient data for training. Current conditions are shown
+                when the NDBC realtime feed is available.
+            </div>`;
+        }
+
+        if (station.last_observation) {
+            html += `<div class="model-info" style="margin-top: 12px">
+                <dt>Last obs:</dt><dd>${station.last_observation}</dd>
+                <dt>Data span:</dt><dd>${station.days_of_data || '—'} days</dd>
+            </div>`;
+        }
+
+        panel.innerHTML = html;
+    }
+
+    // ─── Data Loading ────────────────────────────────────────────
+    async function loadData() {
+        try {
+            const resp = await fetch(DATA_URL + '?t=' + Date.now());
+            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+            data = await resp.json();
+
+            // Sort by 7-day risk descending by default
+            data.stations.sort((a, b) => {
+                const pa = a.predictions && a.predictions['7d'] ? a.predictions['7d'].prob : -1;
+                const pb = b.predictions && b.predictions['7d'] ? b.predictions['7d'].prob : -1;
+                return pb - pa;
+            });
+
+            render();
+        } catch (err) {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div class="error-banner">
+                    Could not load prediction data. The GitHub Actions pipeline may not have run yet.
+                    Check the <a href="https://github.com/AQUAVIEW-DAH/aquaview-hypoxia-demo/actions" style="color: #991b1b">Actions tab</a>
+                    or try refreshing in a few minutes.
+                    <br><small>${err.message}</small>
+                </div>
+                <div class="caveat-banner">
+                    If this is a fresh deployment, you need to run the prediction pipeline at least once.
+                    See the <a href="https://github.com/AQUAVIEW-DAH/aquaview-hypoxia-demo#dashboard" style="color: #92400e">README</a> for setup instructions.
+                </div>
+            `;
+        }
+    }
+
+    // ─── Init ────────────────────────────────────────────────────
+    loadData();
+    setInterval(loadData, REFRESH_INTERVAL);
+
+})();
+</script>
+</body>
+</html>
