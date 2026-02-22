@@ -435,6 +435,101 @@
         }
         .caveat-banner strong { font-weight: 600; }
 
+        /* ─── Satellite Legend ─── */
+        .sat-legend {
+            background: rgba(255,255,255,0.92);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            line-height: 1.4;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+        }
+        .sat-legend .legend-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .sat-legend .legend-bar {
+            height: 10px;
+            width: 120px;
+            border-radius: 2px;
+            margin: 4px 0;
+        }
+        .sat-legend .legend-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: #555;
+        }
+
+        /* ─── Sensor values in table ─── */
+        .td-temp {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+        }
+        .td-sal {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+        }
+
+        /* ─── Satellite section in detail panel ─── */
+        .satellite-section {
+            margin-top: 16px;
+            padding: 14px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e8f4f8 100%);
+            border-radius: 8px;
+            border: 1px solid #bae6fd;
+        }
+        .satellite-section h4 {
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--accent-dark);
+            margin-bottom: 10px;
+        }
+        .sat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .sat-card {
+            background: rgba(255,255,255,0.7);
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+        }
+        .sat-card .val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+        .sat-card .unit {
+            font-size: 0.7em;
+            color: var(--text-muted);
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* Layer control styling */
+        .layer-toggle-btn {
+            background: white;
+            border: 2px solid rgba(0,0,0,0.2);
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 12px;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .layer-toggle-btn:hover {
+            background: #f0f0f0;
+        }
+        .layer-toggle-btn.active {
+            background: var(--accent-light);
+            color: var(--accent-dark);
+            border-color: var(--accent);
+        }
+
         /* ─── Footer ─── */
         .footer {
             grid-column: 1 / -1;
@@ -557,6 +652,7 @@
         const active = data.stations.filter(s => s.status === 'active').length;
         const withModels = data.summary.stations_with_models;
         const warnings = data.summary.stations_with_warnings;
+        const withRealtime = data.summary.stations_with_realtime || data.stations.filter(s => s.current && (s.current.temp != null || s.current.sal != null)).length;
         const highestRisk = data.stations.reduce((a, b) => {
             const aMax = maxRisk(a).prob || 0;
             const bMax = maxRisk(b).prob || 0;
@@ -566,9 +662,9 @@
         app.innerHTML = `
             <div class="summary-bar">
                 <div class="summary-card">
-                    <div class="label">Active Stations</div>
-                    <div class="value">${active}</div>
-                    <div class="sub">${withModels} with models${data.summary.xgboost_stations ? ' (' + data.summary.xgboost_stations + ' XGBoost, ' + (data.summary.timesfm_stations || 0) + ' TimesFM)' : ''}</div>
+                    <div class="label">Monitoring Network</div>
+                    <div class="value">${data.stations.length}</div>
+                    <div class="sub">${withRealtime} reporting live &middot; ${withModels} with models</div>
                 </div>
                 <div class="summary-card">
                     <div class="label">Stations at High Risk</div>
@@ -599,7 +695,9 @@
                     <thead>
                         <tr>
                             <th data-sort="id">Station</th>
-                            <th data-sort="do">DO (mg/L)</th>
+                            <th data-sort="temp">Temp &deg;C</th>
+                            <th data-sort="sal">Sal psu</th>
+                            <th data-sort="do">DO mg/L</th>
                             <th data-sort="1d">1-day</th>
                             <th data-sort="3d">3-day</th>
                             <th data-sort="5d">5-day</th>
@@ -616,13 +714,12 @@
 
             <div class="caveat-banner">
                 <strong>Research demo, not an operational forecast.</strong>
-                This dashboard uses a hybrid approach: <span class="engine-badge engine-xgboost">XGBoost</span> station-specific
-                classifiers where sufficient training data exists, and <span class="engine-badge engine-timesfm">TimesFM</span>
-                (Google's 200M-parameter foundation model) for zero-shot forecasting at data-sparse stations.
-                Only stations with active realtime ocean feeds show live predictions.
-                Updates every ${data.update_interval_hours}h.
+                Hypoxia predictions use <span class="engine-badge engine-xgboost">XGBoost</span> classifiers
+                and <span class="engine-badge engine-timesfm">TimesFM</span> (Google's foundation model) for zero-shot forecasting.
+                Live sensor data (temp, salinity) from NDBC. Satellite chlorophyll-a and SST from NOAA CoastWatch
+                (toggle layers on the map). Updates every ${data.update_interval_hours || 6}h.
                 See <a href="index.html" style="color: #92400e; text-decoration: underline;">the full analysis</a>
-                for methodology and known limitations.
+                for methodology.
             </div>
 
             <div class="footer">
@@ -640,6 +737,9 @@
     }
 
     // ─── Map ─────────────────────────────────────────────────────
+    let satelliteLayers = {};
+    let activeSatLayer = null;
+
     function renderMap() {
         if (map) { map.remove(); }
 
@@ -648,41 +748,120 @@
             zoomControl: true,
         }).setView([27.5, -89.0], 5);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        // Base tile layer
+        const baseTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | Satellite: <a href="https://coastwatch.noaa.gov">CoastWatch</a>',
             maxZoom: 19,
         }).addTo(map);
+
+        // CoastWatch WMS satellite layers
+        const chlaLayer = L.tileLayer.wms('https://coastwatch.noaa.gov/erddap/wms/noaacwS3BOLCIchlaDaily/request?', {
+            layers: 'noaacwS3BOLCIchlaDaily:chlor_a',
+            format: 'image/png',
+            transparent: true,
+            opacity: 0.55,
+            styles: 'rainbow~Log',
+            colorBarMin: 0.01,
+            colorBarMax: 30,
+            attribution: 'Chlorophyll: NOAA CoastWatch Sentinel-3B OLCI',
+        });
+
+        const sstLayer = L.tileLayer.wms('https://coastwatch.noaa.gov/erddap/wms/noaacwSNPPACSPOSSTL3GCDaily/request?', {
+            layers: 'noaacwSNPPACSPOSSTL3GCDaily:sea_surface_temperature',
+            format: 'image/png',
+            transparent: true,
+            opacity: 0.5,
+            styles: 'rainbow~Linear',
+            colorBarMin: 10,
+            colorBarMax: 32,
+            attribution: 'SST: NOAA CoastWatch VIIRS',
+        });
+
+        satelliteLayers = {
+            'Chlorophyll-a': chlaLayer,
+            'Sea Surface Temp': sstLayer,
+        };
+
+        // Add Leaflet layer control
+        const overlays = {
+            'Chlorophyll-a (Sentinel-3B)': chlaLayer,
+            'Sea Surface Temp (VIIRS)': sstLayer,
+        };
+        L.control.layers(null, overlays, { position: 'topright', collapsed: false }).addTo(map);
+
+        // Add chlorophyll layer by default
+        chlaLayer.addTo(map);
+        activeSatLayer = 'chla';
+
+        // Add chlorophyll legend
+        const legend = L.control({ position: 'bottomright' });
+        legend.onAdd = function() {
+            const div = L.DomUtil.create('div', 'sat-legend');
+            div.innerHTML = `
+                <div class="legend-title">Chlorophyll-a (mg/m&sup3;)</div>
+                <div class="legend-bar" style="background: linear-gradient(to right, #440154, #31688e, #35b779, #fde725)"></div>
+                <div class="legend-labels"><span>0.01</span><span>0.1</span><span>1</span><span>30</span></div>
+            `;
+            return div;
+        };
+        legend.addTo(map);
+
+        // Render station markers on top of satellite layers
+        const stationGroup = L.layerGroup().addTo(map);
 
         data.stations.forEach(station => {
             if (!station.lat || !station.lon) return;
 
             const risk = maxRisk(station);
             const color = riskColor(risk.prob);
-            const doVal = station.current && station.current.do != null
-                ? station.current.do.toFixed(2) : '—';
+            const hasLive = station.current && (station.current.temp != null || station.current.sal != null || station.current.do != null);
 
-            // TimesFM stations get a diamond shape via larger radius + dashed stroke
+            // TimesFM stations get dashed stroke
             const isTfm = station.model_type === 'timesfm';
             const marker = L.circleMarker([station.lat, station.lon], {
-                radius: station.has_model ? 10 : 6,
-                color: isTfm ? '#9333ea' : color,
-                fillColor: color,
-                fillOpacity: station.has_model ? 0.7 : 0.3,
-                weight: station.has_model ? 2 : 1,
+                radius: station.has_model ? 10 : (hasLive ? 7 : 5),
+                color: isTfm ? '#9333ea' : (hasLive ? '#1a1a2e' : '#9ca3af'),
+                fillColor: station.has_model ? color : (hasLive ? '#0c6e8c' : '#d1d5db'),
+                fillOpacity: station.has_model ? 0.8 : (hasLive ? 0.6 : 0.3),
+                weight: station.has_model ? 2 : (hasLive ? 1.5 : 1),
                 dashArray: isTfm ? '4 3' : null,
-            }).addTo(map);
+            }).addTo(stationGroup);
 
             const engineLabel = station.model_type === 'timesfm' ? ' <span class="engine-badge engine-timesfm">TFM</span>'
                 : station.model_type === 'xgboost' ? ' <span class="engine-badge engine-xgboost">XGB</span>' : '';
+
+            // Enhanced popup with temp/sal
             let popupHtml = `<div class="popup-station">${station.id}${engineLabel}</div>`;
-            popupHtml += `<div class="popup-do">DO: ${doVal} mg/L</div>`;
+            if (station.name) popupHtml += `<div style="font-size: 11px; color: #666; margin-bottom: 4px">${station.name}</div>`;
+
+            const doVal = station.current && station.current.do != null ? station.current.do.toFixed(2) + ' mg/L' : '—';
+            const tempVal = station.current && station.current.temp != null ? station.current.temp.toFixed(1) + '°C' : '—';
+            const salVal = station.current && station.current.sal != null ? station.current.sal.toFixed(1) + ' psu' : '—';
+
+            popupHtml += `<div class="popup-do" style="margin: 4px 0">
+                <span style="color: #0c6e8c">Temp: ${tempVal}</span> &middot;
+                <span>Sal: ${salVal}</span> &middot;
+                <span>DO: ${doVal}</span>
+            </div>`;
+
             if (risk.prob != null) {
                 popupHtml += `<div class="popup-risk ${riskClass(risk.risk)}">${(risk.prob * 100).toFixed(0)}% onset (${risk.lead})</div>`;
             } else if (station.timesfm_benchmark) {
                 const bestAuc = Math.max(...Object.values(station.timesfm_benchmark).map(v => v.auc_roc || 0));
-                popupHtml += `<div class="popup-risk risk-none">Benchmark AUC: ${bestAuc.toFixed(2)}</div>`;
-            } else {
-                popupHtml += `<div class="popup-risk risk-none">No model</div>`;
+                if (bestAuc > 0) popupHtml += `<div class="popup-risk risk-none">Benchmark AUC: ${bestAuc.toFixed(2)}</div>`;
+            }
+
+            if (station.satellite) {
+                const chlaVal = station.satellite.chla != null ? station.satellite.chla.toFixed(2) + ' mg/m³' : '';
+                const sstVal = station.satellite.sst != null ? station.satellite.sst.toFixed(1) + '°C' : '';
+                if (chlaVal || sstVal) {
+                    popupHtml += `<div style="font-size: 11px; color: #666; margin-top: 4px; border-top: 1px solid #eee; padding-top: 4px">`;
+                    popupHtml += `Satellite: `;
+                    if (chlaVal) popupHtml += `Chl-a ${chlaVal}`;
+                    if (chlaVal && sstVal) popupHtml += ` · `;
+                    if (sstVal) popupHtml += `SST ${sstVal}`;
+                    popupHtml += `</div>`;
+                }
             }
 
             marker.bindPopup(popupHtml);
@@ -702,6 +881,16 @@
             const doColor = s.current && s.current.do != null && s.current.do <= 2.0
                 ? 'color: var(--red); font-weight: 700' : '';
 
+            // Temperature cell with color gradient (blue=cool, warm=red)
+            const tempVal = s.current && s.current.temp != null ? s.current.temp.toFixed(1) : '—';
+            const tempColor = s.current && s.current.temp != null
+                ? (s.current.temp < 15 ? 'color: #2563eb' : s.current.temp < 25 ? 'color: var(--text)' : s.current.temp < 30 ? 'color: #d97706' : 'color: #dc2626')
+                : 'color: var(--text-muted)';
+
+            // Salinity cell
+            const salVal = s.current && s.current.sal != null ? s.current.sal.toFixed(1) : '—';
+            const salColor = s.current && s.current.sal != null ? '' : 'color: var(--text-muted)';
+
             function probCell(lead) {
                 if (!s.predictions || !s.predictions[lead]) return '<td class="td-prob" style="color: var(--text-muted)">—</td>';
                 const p = s.predictions[lead];
@@ -716,6 +905,8 @@
             return `<tr data-station="${s.id}" class="${selectedStation === s.id ? 'selected' : ''}"
                         onclick="window._selectStation('${s.id}')">
                 <td class="td-station">${s.id}${engineBadge}</td>
+                <td class="td-temp" style="${tempColor}">${tempVal}</td>
+                <td class="td-sal" style="${salColor}">${salVal}</td>
                 <td class="td-do" style="${doColor}">${doVal}</td>
                 ${probCell('1d')}
                 ${probCell('3d')}
@@ -748,6 +939,12 @@
             if (key === 'do') {
                 va = a.current && a.current.do != null ? a.current.do : -999;
                 vb = b.current && b.current.do != null ? b.current.do : -999;
+            } else if (key === 'temp') {
+                va = a.current && a.current.temp != null ? a.current.temp : -999;
+                vb = b.current && b.current.temp != null ? b.current.temp : -999;
+            } else if (key === 'sal') {
+                va = a.current && a.current.sal != null ? a.current.sal : -999;
+                vb = b.current && b.current.sal != null ? b.current.sal : -999;
             } else {
                 va = a.predictions && a.predictions[key] ? a.predictions[key].prob : -1;
                 vb = b.predictions && b.predictions[key] ? b.predictions[key].prob : -1;
@@ -775,16 +972,18 @@
 
         // Highlight map marker
         Object.entries(markers).forEach(([id, m]) => {
-            const risk = maxRisk(data.stations.find(s => s.id === id));
+            const s = data.stations.find(x => x.id === id);
+            const risk = maxRisk(s);
             const color = riskColor(risk.prob);
+            const hasLive = s && s.current && (s.current.temp != null || s.current.sal != null || s.current.do != null);
+            const isTfm = s && s.model_type === 'timesfm';
             if (id === stationId) {
-                m.setStyle({ weight: 4, color: '#1a1a2e', fillColor: color });
+                m.setStyle({ weight: 4, color: '#1a1a2e', fillColor: s.has_model ? color : '#0c6e8c' });
             } else {
-                const s = data.stations.find(x => x.id === id);
                 m.setStyle({
-                    weight: s && s.has_model ? 2 : 1,
-                    color: color,
-                    fillColor: color,
+                    weight: s && s.has_model ? 2 : (hasLive ? 1.5 : 1),
+                    color: isTfm ? '#9333ea' : (hasLive ? '#1a1a2e' : '#9ca3af'),
+                    fillColor: s.has_model ? color : (hasLive ? '#0c6e8c' : '#d1d5db'),
                 });
             }
         });
@@ -795,6 +994,8 @@
         const doVal = station.current && station.current.do != null ? station.current.do.toFixed(2) : '—';
         const tempVal = station.current && station.current.temp != null ? station.current.temp.toFixed(1) : '—';
         const salVal = station.current && station.current.sal != null ? station.current.sal.toFixed(1) : '—';
+        const turbVal = station.current && station.current.turbidity != null ? station.current.turbidity.toFixed(1) : null;
+        const phVal = station.current && station.current.ph != null ? station.current.ph.toFixed(2) : null;
 
         const engineBadgeDetail = station.model_type === 'timesfm'
             ? '<span class="engine-badge engine-timesfm" style="margin-left: 8px">TimesFM</span>'
@@ -802,17 +1003,21 @@
             ? '<span class="engine-badge engine-xgboost" style="margin-left: 8px">XGBoost</span>'
             : '';
 
+        const hasAnySensor = station.current && (station.current.temp != null || station.current.sal != null || station.current.do != null);
+        const statusText = station.currently_hypoxic ? 'Currently Hypoxic'
+            : station.status === 'historical_only' ? 'Historical only'
+            : station.has_model && station.predictions ? maxRisk(station).risk + ' risk'
+            : hasAnySensor ? 'Live monitoring'
+            : station.status === 'active' ? 'Conditions only'
+            : 'Offline';
+
         let html = `
             <div class="detail-header">
                 <h2>${station.id}${engineBadgeDetail}</h2>
                 <div class="coords">${station.name || ''}</div>
                 ${station.lat ? `<div class="coords">${station.lat.toFixed(3)}&deg;N, ${Math.abs(station.lon).toFixed(3)}&deg;W</div>` : ''}
-                <span class="popup-risk ${station.currently_hypoxic ? 'risk-high' : riskClass(maxRisk(station).risk)} status-badge">
-                    ${station.currently_hypoxic ? 'Currently Hypoxic'
-                        : station.status === 'historical_only' ? 'Historical only'
-                        : station.has_model && station.predictions ? maxRisk(station).risk + ' risk'
-                        : station.status === 'active' ? 'Conditions only'
-                        : 'No data'}
+                <span class="popup-risk ${station.currently_hypoxic ? 'risk-high' : (hasAnySensor && !station.predictions ? 'risk-none' : riskClass(maxRisk(station).risk))} status-badge">
+                    ${statusText}
                 </span>
             </div>
 
@@ -822,7 +1027,7 @@
                     <span class="unit">DO (mg/L)</span>
                 </div>
                 <div class="condition-card">
-                    <div class="val">${tempVal}</div>
+                    <div class="val" style="${station.current && station.current.temp != null ? (station.current.temp > 29 ? 'color: #dc2626' : station.current.temp > 25 ? 'color: #d97706' : 'color: #2563eb') : ''}">${tempVal}</div>
                     <span class="unit">Temp (&deg;C)</span>
                 </div>
                 <div class="condition-card">
@@ -831,6 +1036,38 @@
                 </div>
             </div>
         `;
+
+        // Extra sensor data (turbidity, pH) if available
+        if (turbVal || phVal) {
+            html += '<div class="current-conditions" style="margin-top: -10px; margin-bottom: 20px">';
+            if (turbVal) html += `<div class="condition-card"><div class="val">${turbVal}</div><span class="unit">Turbidity (NTU)</span></div>`;
+            if (phVal) html += `<div class="condition-card"><div class="val">${phVal}</div><span class="unit">pH</span></div>`;
+            html += '</div>';
+        }
+
+        // Satellite data section
+        if (station.satellite && (station.satellite.chla != null || station.satellite.sst != null)) {
+            html += `<div class="satellite-section">
+                <h4>Satellite Observations</h4>
+                <div class="sat-grid">`;
+            if (station.satellite.chla != null) {
+                html += `<div class="sat-card">
+                    <div class="val" style="color: #16a34a">${station.satellite.chla.toFixed(2)}</div>
+                    <span class="unit">Chl-a (mg/m&sup3;)</span>
+                </div>`;
+            }
+            if (station.satellite.sst != null) {
+                html += `<div class="sat-card">
+                    <div class="val" style="color: #0c6e8c">${station.satellite.sst.toFixed(1)}</div>
+                    <span class="unit">SST (&deg;C)</span>
+                </div>`;
+            }
+            html += `</div>`;
+            if (station.satellite.date) {
+                html += `<div style="font-size: 0.7em; color: var(--text-muted); margin-top: 6px; text-align: right">via CoastWatch ${station.satellite.date}</div>`;
+            }
+            html += `</div>`;
+        }
 
         if (station.predictions && Object.keys(station.predictions).length > 0) {
             html += '<div class="forecast-grid">';
@@ -928,11 +1165,16 @@
             if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
             data = await resp.json();
 
-            // Sort by 7-day risk descending by default
+            // Sort: stations with predictions first (by risk), then stations with live data, then offline
             data.stations.sort((a, b) => {
                 const pa = a.predictions && a.predictions['7d'] ? a.predictions['7d'].prob : -1;
                 const pb = b.predictions && b.predictions['7d'] ? b.predictions['7d'].prob : -1;
-                return pb - pa;
+                if (pa >= 0 || pb >= 0) return pb - pa;
+                // Both lack predictions: sort by whether they have live sensor data
+                const aLive = a.current && (a.current.temp != null || a.current.sal != null) ? 1 : 0;
+                const bLive = b.current && (b.current.temp != null || b.current.sal != null) ? 1 : 0;
+                if (aLive !== bLive) return bLive - aLive;
+                return a.id.localeCompare(b.id);
             });
 
             render();

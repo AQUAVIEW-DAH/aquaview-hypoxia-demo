@@ -1,5 +1,5 @@
 {
-  "updated": "2026-02-22T13:46:33Z",
+  "updated": "2026-02-22T15:30:28Z",
   "update_interval_hours": 6,
   "stations": [
     {
@@ -10,10 +10,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 24.8,
-        "sal": 31.5
+        "temp": 24.6,
+        "sal": 31.6
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.239,
       "lon": -80.422,
@@ -25,7 +25,13 @@
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
-      "current": null,
+      "current": {
+        "temp": 22.4,
+        "sal": 7.6,
+        "do": 7.8,
+        "turbidity": 21.0,
+        "ph": 8.1
+      },
       "predictions": null,
       "lat": 29.727,
       "lon": -84.98,
@@ -49,7 +55,8 @@
       },
       "model_type": "timesfm",
       "n_days": 1258,
-      "n_hyp_days": 77
+      "n_hyp_days": 77,
+      "last_observation": "2026-02-22"
     },
     {
       "id": "WPLF1",
@@ -60,9 +67,9 @@
       "current": {
         "do": null,
         "temp": 24.6,
-        "sal": 36.9
+        "sal": 37.3
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 40,
       "lat": 25.71,
       "lon": -81.249,
@@ -76,10 +83,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 25.7,
-        "sal": 30.0
+        "temp": 25.5,
+        "sal": 31.1
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 45,
       "lat": 25.224,
       "lon": -80.541,
@@ -93,10 +100,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 22.9,
-        "sal": 37.7
+        "temp": 22.8,
+        "sal": 37.5
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.266,
       "lon": -81.162,
@@ -110,10 +117,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 24.9,
+        "temp": 24.5,
         "sal": 32.9
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.289,
       "lon": -80.396,
@@ -127,10 +134,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 23.8,
-        "sal": 24.8
+        "temp": 23.9,
+        "sal": 25.3
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.587,
       "lon": -81.044,
@@ -145,9 +152,9 @@
       "current": {
         "do": null,
         "temp": 17.4,
-        "sal": 35.2
+        "sal": 35.1
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 29.289,
       "lon": -80.803,
@@ -161,10 +168,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 24.8,
-        "sal": 19.8
+        "temp": 24.9,
+        "sal": 20.3
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.41,
       "lon": -80.964,
@@ -178,10 +185,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 25.4,
-        "sal": 36.2
+        "temp": 24.9,
+        "sal": 36.5
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.155,
       "lon": -80.722,
@@ -195,10 +202,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 23.4,
-        "sal": 32.3
+        "temp": 23.6,
+        "sal": 33.5
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.424,
       "lon": -81.06,
@@ -212,10 +219,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 24.3,
+        "temp": 25.0,
         "sal": 38.2
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.053,
       "lon": -80.904,
@@ -229,10 +236,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 25.0,
+        "temp": 24.9,
         "sal": 30.6
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.214,
       "lon": -80.432,
@@ -246,10 +253,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 25.4,
+        "temp": 25.5,
         "sal": 20.0
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.284,
       "lon": -80.894,
@@ -263,10 +270,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 23.3,
-        "sal": 31.6
+        "temp": 23.5,
+        "sal": 32.4
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.378,
       "lon": -81.029,
@@ -280,10 +287,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 25.1,
-        "sal": 31.1
+        "temp": 24.7,
+        "sal": 30.6
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.213,
       "lon": -80.533,
@@ -296,11 +303,13 @@
       "has_realtime": true,
       "status": "active",
       "current": {
-        "do": 3.34,
-        "temp": 20.5,
-        "sal": 21.1
+        "do": 4.9,
+        "temp": 18.6,
+        "sal": 19.0,
+        "turbidity": 14.0,
+        "ph": 6.9
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "currently_hypoxic": false,
       "predictions": {
@@ -375,10 +384,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 24.6,
-        "sal": 31.9
+        "temp": 24.8,
+        "sal": 32.0
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.178,
       "lon": -80.438,
@@ -393,9 +402,9 @@
       "current": {
         "do": null,
         "temp": 24.9,
-        "sal": 20.4
+        "sal": 21.2
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.478,
       "lon": -80.989,
@@ -409,10 +418,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 22.4,
+        "temp": 22.2,
         "sal": 36.4
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 45,
       "lat": 27.593,
       "lon": -80.189,
@@ -425,11 +434,13 @@
       "has_realtime": true,
       "status": "monitoring",
       "current": {
-        "do": 7.92,
-        "temp": 20.5,
-        "sal": 24.2
+        "do": 7.3,
+        "temp": 21.3,
+        "sal": 21.8,
+        "turbidity": 36.0,
+        "ph": 8.2
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 14,
       "currently_hypoxic": false,
       "lat": 29.675,
@@ -464,10 +475,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 25.5,
-        "sal": 33.5
+        "temp": 25.2,
+        "sal": 33.7
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.702,
       "lon": -81.186,
@@ -481,10 +492,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 22.9,
+        "temp": 23.5,
         "sal": 36.9
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.171,
       "lon": -83.475,
@@ -498,10 +509,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 23.7,
-        "sal": 9.9
+        "temp": 23.8,
+        "sal": 11.8
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.422,
       "lon": -80.942,
@@ -515,10 +526,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 23.9,
-        "sal": 36.1
+        "temp": 24.5,
+        "sal": 36.3
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.027,
       "lon": -80.681,
@@ -566,10 +577,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 25.1,
-        "sal": 31.1
+        "temp": 24.4,
+        "sal": 31.3
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.254,
       "lon": -80.444,
@@ -582,9 +593,11 @@
       "has_realtime": true,
       "status": "active",
       "current": {
-        "do": 7.27,
-        "temp": 20.0,
-        "sal": 35.4
+        "do": 7.5,
+        "temp": 20.3,
+        "sal": 35.4,
+        "turbidity": 4.0,
+        "ph": 8.2
       },
       "last_observation": "2026-02-12",
       "days_of_data": 2,
@@ -601,10 +614,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 25.4,
-        "sal": 23.8
+        "temp": 24.9,
+        "sal": 24.1
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.217,
       "lon": -80.65,
@@ -618,10 +631,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 25.2,
-        "sal": 17.2
+        "temp": 25.6,
+        "sal": 17.7
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.232,
       "lon": -80.938,
@@ -635,10 +648,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 25.0,
-        "sal": 29.9
+        "temp": 25.5,
+        "sal": 29.2
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.297,
       "lon": -81.013,
@@ -652,10 +665,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 24.2,
-        "sal": 32.0
+        "temp": 24.6,
+        "sal": 32.1
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.203,
       "lon": -80.372,
@@ -669,10 +682,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 24.1,
-        "sal": 38.2
+        "temp": 24.0,
+        "sal": 38.1
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.106,
       "lon": -80.942,
@@ -686,10 +699,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 24.9,
-        "sal": 41.3
+        "temp": 24.6,
+        "sal": 41.5
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.167,
       "lon": -80.801,
@@ -703,10 +716,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 24.8,
+        "temp": 24.7,
         "sal": 31.7
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.18,
       "lon": -80.49,
@@ -812,10 +825,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 24.9,
-        "sal": 39.0
+        "temp": 24.5,
+        "sal": 38.6
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.119,
       "lon": -80.834,
@@ -828,11 +841,13 @@
       "has_realtime": true,
       "status": "historical_only",
       "current": {
-        "do": 7.34,
-        "temp": 21.0,
-        "sal": 33.1
+        "do": 7.3,
+        "temp": 20.6,
+        "sal": 34.1,
+        "turbidity": 14.0,
+        "ph": 8.0
       },
-      "last_observation": "2026-02-17",
+      "last_observation": "2026-02-22",
       "days_of_data": 42,
       "currently_hypoxic": false,
       "lat": 28.132,
@@ -867,10 +882,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 23.7,
-        "sal": 35.2
+        "temp": 23.9,
+        "sal": 35.4
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.352,
       "lon": -81.1,
@@ -884,10 +899,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 24.9,
-        "sal": 27.6
+        "temp": 25.1,
+        "sal": 27.8
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.176,
       "lon": -80.633,
@@ -900,11 +915,13 @@
       "has_realtime": true,
       "status": "historical_only",
       "current": {
-        "do": 5.6,
-        "temp": 22.6,
-        "sal": 32.7
+        "do": 7.4,
+        "temp": 17.7,
+        "sal": 31.5,
+        "turbidity": 219.0,
+        "ph": 8.2
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "currently_hypoxic": false,
       "lat": 28.138,
@@ -943,8 +960,8 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 24.1,
-        "sal": 36.5
+        "temp": 24.8,
+        "sal": 37.1
       },
       "last_observation": "2026-02-19",
       "days_of_data": 46,
@@ -959,11 +976,13 @@
       "has_realtime": true,
       "status": "monitoring",
       "current": {
-        "do": 7.21,
-        "temp": 20.4,
-        "sal": 35.6
+        "do": 7.3,
+        "temp": 19.8,
+        "sal": 35.2,
+        "turbidity": 14.0,
+        "ph": 8.0
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "currently_hypoxic": false,
       "lat": 27.838,
@@ -1030,10 +1049,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 25.0,
-        "sal": 22.9
+        "temp": 24.6,
+        "sal": 23.4
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.338,
       "lon": -80.911,
@@ -1046,9 +1065,11 @@
       "has_realtime": true,
       "status": "monitoring",
       "current": {
-        "do": 7.33,
-        "temp": 19.7,
-        "sal": 28.3
+        "do": 8.0,
+        "temp": 20.2,
+        "sal": 27.9,
+        "turbidity": 6.0,
+        "ph": 7.9
       },
       "last_observation": "2026-02-12",
       "days_of_data": 3,
@@ -1085,10 +1106,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 24.5,
+        "temp": 24.4,
         "sal": 31.9
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.087,
       "lon": -80.519,
@@ -1148,10 +1169,10 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 24.9,
-        "sal": 31.0
+        "temp": 24.6,
+        "sal": 31.1
       },
-      "last_observation": "2026-02-21",
+      "last_observation": "2026-02-22",
       "days_of_data": 46,
       "lat": 25.235,
       "lon": -80.457,
@@ -1267,7 +1288,11 @@
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
-      "current": null,
+      "current": {
+        "sal": 21.8,
+        "do": 19.8,
+        "turbidity": 8.0
+      },
       "predictions": null,
       "model_type": "timesfm",
       "lat": 30.417,
@@ -1291,7 +1316,8 @@
           "mae": 1.31,
           "correlation": 0.698
         }
-      }
+      },
+      "last_observation": "2026-02-22"
     },
     {
       "id": "GDQM6",
@@ -1299,7 +1325,13 @@
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
-      "current": null,
+      "current": {
+        "temp": 18.7,
+        "sal": 27.1,
+        "do": 7.7,
+        "turbidity": 26.0,
+        "ph": 7.9
+      },
       "predictions": null,
       "model_type": "timesfm",
       "lat": 30.373,
@@ -1327,7 +1359,8 @@
           "mae": 0.87,
           "correlation": 0.781
         }
-      }
+      },
+      "last_observation": "2026-02-22"
     },
     {
       "id": "MAQT2",
@@ -1335,7 +1368,13 @@
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
-      "current": null,
+      "current": {
+        "temp": 19.6,
+        "sal": 33.1,
+        "do": 7.1,
+        "turbidity": 336.0,
+        "ph": 8.1
+      },
       "predictions": null,
       "model_type": "timesfm",
       "lat": 28.113,
@@ -1359,7 +1398,8 @@
           "mae": 0.74,
           "correlation": 0.632
         }
-      }
+      },
+      "last_observation": "2026-02-22"
     },
     {
       "id": "RKQF1",
@@ -1367,7 +1407,13 @@
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
-      "current": null,
+      "current": {
+        "temp": 23.9,
+        "sal": 35.6,
+        "do": 4.6,
+        "turbidity": 11.0,
+        "ph": 7.7
+      },
       "predictions": null,
       "model_type": "timesfm",
       "lat": 26.024,
@@ -1395,7 +1441,8 @@
           "mae": 0.86,
           "correlation": 0.303
         }
-      }
+      },
+      "last_observation": "2026-02-22"
     },
     {
       "id": "CLBF1",
@@ -1437,7 +1484,8 @@
     "stations_with_warnings": 0,
     "xgboost_stations": 4,
     "timesfm_stations": 16,
-    "stations_with_hypoxia_history": 15
+    "stations_with_hypoxia_history": 15,
+    "stations_with_realtime": 49
   },
   "model_info": {
     "xgboost": {
