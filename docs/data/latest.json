@@ -1,5 +1,5 @@
 {
-  "updated": "2026-02-22T15:30:28Z",
+  "updated": "2026-02-22T15:43:10Z",
   "update_interval_hours": 6,
   "stations": [
     {
@@ -24,7 +24,7 @@
       "name": "Apalachicola, FL",
       "has_model": true,
       "has_realtime": false,
-      "status": "historical_only",
+      "status": "active",
       "current": {
         "temp": 22.4,
         "sal": 7.6,
@@ -32,7 +32,32 @@
         "turbidity": 21.0,
         "ph": 8.1
       },
-      "predictions": null,
+      "predictions": {
+        "1d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 7.52
+        },
+        "3d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 7.52
+        },
+        "5d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 7.52
+        },
+        "7d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 7.52
+        }
+      },
       "lat": 29.727,
       "lon": -84.98,
       "timesfm_benchmark": {
@@ -432,7 +457,7 @@
       "name": "Dry Bar, Apalachicola Reserve, FL",
       "has_model": true,
       "has_realtime": true,
-      "status": "monitoring",
+      "status": "active",
       "current": {
         "do": 7.3,
         "temp": 21.3,
@@ -465,7 +490,33 @@
         }
       },
       "n_days": 74,
-      "n_hyp_days": 0
+      "n_hyp_days": 0,
+      "predictions": {
+        "1d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 7.3
+        },
+        "3d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 7.3
+        },
+        "5d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 7.3
+        },
+        "7d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 7.3
+        }
+      }
     },
     {
       "id": "CNBF1",
@@ -839,7 +890,7 @@
       "name": "Copano Bay West, TX",
       "has_model": true,
       "has_realtime": true,
-      "status": "historical_only",
+      "status": "active",
       "current": {
         "do": 7.3,
         "temp": 20.6,
@@ -872,7 +923,33 @@
         }
       },
       "n_days": 2054,
-      "n_hyp_days": 12
+      "n_hyp_days": 12,
+      "predictions": {
+        "1d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 7.12
+        },
+        "3d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 7.12
+        },
+        "5d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 7.12
+        },
+        "7d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 7.12
+        }
+      }
     },
     {
       "id": "SREF1",
@@ -913,7 +990,7 @@
       "name": "Mesquite Bay, TX",
       "has_model": true,
       "has_realtime": true,
-      "status": "historical_only",
+      "status": "active",
       "current": {
         "do": 7.4,
         "temp": 17.7,
@@ -950,7 +1027,33 @@
         }
       },
       "n_days": 1484,
-      "n_hyp_days": 30
+      "n_hyp_days": 30,
+      "predictions": {
+        "1d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 6.81
+        },
+        "3d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 6.63
+        },
+        "5d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 6.61
+        },
+        "7d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 6.24
+        }
+      }
     },
     {
       "id": "LMRF1",
@@ -974,7 +1077,7 @@
       "name": "Copano Bay, Mission-Aransas Reserve, TX",
       "has_model": true,
       "has_realtime": true,
-      "status": "monitoring",
+      "status": "active",
       "current": {
         "do": 7.3,
         "temp": 19.8,
@@ -1007,7 +1110,33 @@
         }
       },
       "n_days": 566,
-      "n_hyp_days": 0
+      "n_hyp_days": 0,
+      "predictions": {
+        "1d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 7.0
+        },
+        "3d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 6.91
+        },
+        "5d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 6.87
+        },
+        "7d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 6.87
+        }
+      }
     },
     {
       "id": "CRTA1",
@@ -1063,7 +1192,7 @@
       "name": "Bayou Cumbest, Grand Bay Reserve, MS",
       "has_model": true,
       "has_realtime": true,
-      "status": "monitoring",
+      "status": "active",
       "current": {
         "do": 8.0,
         "temp": 20.2,
@@ -1096,7 +1225,33 @@
         }
       },
       "n_days": 480,
-      "n_hyp_days": 0
+      "n_hyp_days": 0,
+      "predictions": {
+        "1d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 8.04
+        },
+        "3d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 8.04
+        },
+        "5d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 8.04
+        },
+        "7d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 8.04
+        }
+      }
     },
     {
       "id": "BNKF1",
@@ -1324,7 +1479,7 @@
       "name": "Bangs Lake, Grand Bay Reserve, MS",
       "has_model": true,
       "has_realtime": false,
-      "status": "historical_only",
+      "status": "active",
       "current": {
         "temp": 18.7,
         "sal": 27.1,
@@ -1332,7 +1487,32 @@
         "turbidity": 26.0,
         "ph": 7.9
       },
-      "predictions": null,
+      "predictions": {
+        "1d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 7.12
+        },
+        "3d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 6.99
+        },
+        "5d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 6.99
+        },
+        "7d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 6.99
+        }
+      },
       "model_type": "timesfm",
       "lat": 30.373,
       "lon": -88.324,
@@ -1367,7 +1547,7 @@
       "name": "Aransas Bay, Mission-Aransas Reserve, TX",
       "has_model": true,
       "has_realtime": false,
-      "status": "historical_only",
+      "status": "active",
       "current": {
         "temp": 19.6,
         "sal": 33.1,
@@ -1375,7 +1555,32 @@
         "turbidity": 336.0,
         "ph": 8.1
       },
-      "predictions": null,
+      "predictions": {
+        "1d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 6.99
+        },
+        "3d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 6.8
+        },
+        "5d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 6.73
+        },
+        "7d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 6.73
+        }
+      },
       "model_type": "timesfm",
       "lat": 28.113,
       "lon": -96.988,
@@ -1406,7 +1611,7 @@
       "name": "Lower Henderson Creek, Rookery Bay Reserve, FL",
       "has_model": true,
       "has_realtime": false,
-      "status": "historical_only",
+      "status": "active",
       "current": {
         "temp": 23.9,
         "sal": 35.6,
@@ -1414,7 +1619,32 @@
         "turbidity": 11.0,
         "ph": 7.7
       },
-      "predictions": null,
+      "predictions": {
+        "1d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 4.33
+        },
+        "3d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 4.17
+        },
+        "5d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 4.08
+        },
+        "7d": {
+          "prob": 0.0,
+          "risk": "low",
+          "engine": "timesfm",
+          "forecast_min_do": 4.08
+        }
+      },
       "model_type": "timesfm",
       "lat": 26.024,
       "lon": -81.737,
@@ -1480,7 +1710,7 @@
   "summary": {
     "total_stations": 58,
     "stations_with_models": 20,
-    "stations_with_predictions": 1,
+    "stations_with_predictions": 10,
     "stations_with_warnings": 0,
     "xgboost_stations": 4,
     "timesfm_stations": 16,
