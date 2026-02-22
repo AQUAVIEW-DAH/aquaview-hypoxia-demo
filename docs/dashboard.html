@@ -356,6 +356,72 @@
         .model-info dt { font-weight: 600; display: inline; }
         .model-info dd { display: inline; margin-left: 4px; margin-right: 12px; }
 
+        /* ─── Model Engine Badges ─── */
+        .engine-badge {
+            display: inline-block;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 0.65em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            vertical-align: middle;
+            margin-left: 6px;
+        }
+        .engine-xgboost {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+        .engine-timesfm {
+            background: #fae8ff;
+            color: #9333ea;
+        }
+        .engine-none {
+            background: var(--bg-alt);
+            color: var(--text-muted);
+        }
+        /* Benchmark comparison section */
+        .benchmark-section {
+            margin-top: 16px;
+            padding: 14px;
+            background: var(--bg-alt);
+            border-radius: 8px;
+        }
+        .benchmark-section h4 {
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+        .benchmark-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            font-size: 0.82em;
+        }
+        .benchmark-row .lead { width: 36px; font-weight: 600; color: var(--text-secondary); }
+        .benchmark-bar {
+            flex: 1;
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .benchmark-bar .bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s;
+        }
+        .benchmark-val {
+            width: 40px;
+            text-align: right;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+        }
+
         /* ─── Caveat Banner ─── */
         .caveat-banner {
             grid-column: 1 / -1;
@@ -502,7 +568,7 @@
                 <div class="summary-card">
                     <div class="label">Active Stations</div>
                     <div class="value">${active}</div>
-                    <div class="sub">${withModels} with trained models</div>
+                    <div class="sub">${withModels} with models${data.summary.xgboost_stations ? ' (' + data.summary.xgboost_stations + ' XGBoost, ' + (data.summary.timesfm_stations || 0) + ' TimesFM)' : ''}</div>
                 </div>
                 <div class="summary-card">
                     <div class="label">Stations at High Risk</div>
@@ -550,16 +616,19 @@
 
             <div class="caveat-banner">
                 <strong>Research demo, not an operational forecast.</strong>
-                Models are trained per-station on historical NDBC data. Only stations with active realtime
-                ocean feeds can show live predictions; some trained stations are currently offline.
-                Predictions update every ${data.update_interval_hours} hours.
+                This dashboard uses a hybrid approach: <span class="engine-badge engine-xgboost">XGBoost</span> station-specific
+                classifiers where sufficient training data exists, and <span class="engine-badge engine-timesfm">TimesFM</span>
+                (Google's 200M-parameter foundation model) for zero-shot forecasting at data-sparse stations.
+                Only stations with active realtime ocean feeds show live predictions.
+                Updates every ${data.update_interval_hours}h.
                 See <a href="index.html" style="color: #92400e; text-decoration: underline;">the full analysis</a>
-                for methodology, literature context, and known limitations.
+                for methodology and known limitations.
             </div>
 
             <div class="footer">
                 Built with <a href="https://aquaview.org">AQUAVIEW</a> &middot;
                 Data from NDBC + CoastWatch &middot;
+                Models: XGBoost + <a href="https://github.com/google-research/timesfm">Google TimesFM</a> &middot;
                 <a href="https://github.com/AQUAVIEW-DAH/aquaview-hypoxia-demo">Source on GitHub</a>
             </div>
         `;
@@ -592,18 +661,26 @@
             const doVal = station.current && station.current.do != null
                 ? station.current.do.toFixed(2) : '—';
 
+            // TimesFM stations get a diamond shape via larger radius + dashed stroke
+            const isTfm = station.model_type === 'timesfm';
             const marker = L.circleMarker([station.lat, station.lon], {
                 radius: station.has_model ? 10 : 6,
-                color: color,
+                color: isTfm ? '#9333ea' : color,
                 fillColor: color,
                 fillOpacity: station.has_model ? 0.7 : 0.3,
                 weight: station.has_model ? 2 : 1,
+                dashArray: isTfm ? '4 3' : null,
             }).addTo(map);
 
-            let popupHtml = `<div class="popup-station">${station.id}</div>`;
+            const engineLabel = station.model_type === 'timesfm' ? ' <span class="engine-badge engine-timesfm">TFM</span>'
+                : station.model_type === 'xgboost' ? ' <span class="engine-badge engine-xgboost">XGB</span>' : '';
+            let popupHtml = `<div class="popup-station">${station.id}${engineLabel}</div>`;
             popupHtml += `<div class="popup-do">DO: ${doVal} mg/L</div>`;
             if (risk.prob != null) {
                 popupHtml += `<div class="popup-risk ${riskClass(risk.risk)}">${(risk.prob * 100).toFixed(0)}% onset (${risk.lead})</div>`;
+            } else if (station.timesfm_benchmark) {
+                const bestAuc = Math.max(...Object.values(station.timesfm_benchmark).map(v => v.auc_roc || 0));
+                popupHtml += `<div class="popup-risk risk-none">Benchmark AUC: ${bestAuc.toFixed(2)}</div>`;
             } else {
                 popupHtml += `<div class="popup-risk risk-none">No model</div>`;
             }
@@ -632,9 +709,13 @@
                 return `<td class="td-prob" style="color: ${color}">${(p.prob * 100).toFixed(0)}%</td>`;
             }
 
+            const engineBadge = s.model_type
+                ? `<span class="engine-badge engine-${s.model_type}">${s.model_type === 'timesfm' ? 'TFM' : 'XGB'}</span>`
+                : '';
+
             return `<tr data-station="${s.id}" class="${selectedStation === s.id ? 'selected' : ''}"
                         onclick="window._selectStation('${s.id}')">
-                <td class="td-station">${s.id}</td>
+                <td class="td-station">${s.id}${engineBadge}</td>
                 <td class="td-do" style="${doColor}">${doVal}</td>
                 ${probCell('1d')}
                 ${probCell('3d')}
@@ -715,9 +796,15 @@
         const tempVal = station.current && station.current.temp != null ? station.current.temp.toFixed(1) : '—';
         const salVal = station.current && station.current.sal != null ? station.current.sal.toFixed(1) : '—';
 
+        const engineBadgeDetail = station.model_type === 'timesfm'
+            ? '<span class="engine-badge engine-timesfm" style="margin-left: 8px">TimesFM</span>'
+            : station.model_type === 'xgboost'
+            ? '<span class="engine-badge engine-xgboost" style="margin-left: 8px">XGBoost</span>'
+            : '';
+
         let html = `
             <div class="detail-header">
-                <h2>${station.id}</h2>
+                <h2>${station.id}${engineBadgeDetail}</h2>
                 <div class="coords">${station.name || ''}</div>
                 ${station.lat ? `<div class="coords">${station.lat.toFixed(3)}&deg;N, ${Math.abs(station.lon).toFixed(3)}&deg;W</div>` : ''}
                 <span class="popup-risk ${station.currently_hypoxic ? 'risk-high' : riskClass(maxRisk(station).risk)} status-badge">
@@ -770,8 +857,13 @@
                 html += '</dl></div>';
             }
         } else if (station.status === 'historical_only') {
+            const modelDesc = station.model_type === 'timesfm'
+                ? 'This station uses <strong>TimesFM</strong> (zero-shot foundation model) for forecasting because it has too few hypoxic events for reliable XGBoost training.'
+                : station.model_type === 'xgboost'
+                ? 'This station has a trained <strong>XGBoost</strong> model but no active realtime ocean data feed.'
+                : 'This station has a trained model but no active realtime data feed.';
             html += `<div class="no-model-note">
-                This station has a trained model but no active realtime ocean data feed.
+                ${modelDesc}
                 The station's NDBC sensor may be decommissioned or offline. Predictions will
                 resume if the realtime feed becomes available again.
             </div>`;
@@ -781,6 +873,42 @@
                 historical hypoxic events or insufficient data for training. Current conditions are shown
                 when the NDBC realtime feed is available.
             </div>`;
+        }
+
+        // Show benchmark comparison if available
+        if (station.timesfm_benchmark) {
+            html += '<div class="benchmark-section"><h4>Model Benchmark (AUC-ROC)</h4>';
+            const leads = ['1d', '3d', '5d', '7d'];
+            for (const lead of leads) {
+                const tfm = station.timesfm_benchmark[lead];
+                const xgb = station.xgboost_benchmark && station.xgboost_benchmark[lead];
+                if (!tfm) continue;
+
+                html += `<div class="benchmark-row"><span class="lead">${lead}</span>`;
+
+                // TimesFM bar
+                const tfmPct = (tfm.auc_roc * 100).toFixed(0);
+                html += `<div class="benchmark-bar"><div class="bar-fill" style="width: ${tfmPct}%; background: #9333ea"></div></div>`;
+                html += `<span class="benchmark-val" style="color: #9333ea">${tfm.auc_roc.toFixed(2)}</span>`;
+
+                // XGBoost bar if available
+                if (xgb) {
+                    const xgbPct = (xgb.auc_roc * 100).toFixed(0);
+                    html += `<div class="benchmark-bar"><div class="bar-fill" style="width: ${xgbPct}%; background: #1d4ed8"></div></div>`;
+                    html += `<span class="benchmark-val" style="color: #1d4ed8">${xgb.auc_roc.toFixed(2)}</span>`;
+                }
+
+                html += '</div>';
+            }
+            html += '<div style="margin-top: 8px; font-size: 0.75em; color: var(--text-muted)">';
+            html += '<span style="color: #9333ea">&#9632;</span> TimesFM (zero-shot)';
+            if (station.xgboost_benchmark) {
+                html += ' &nbsp; <span style="color: #1d4ed8">&#9632;</span> XGBoost (trained)';
+            }
+            if (station.n_hyp_days) {
+                html += ` &nbsp; | &nbsp; ${station.n_hyp_days} hypoxic days in ${station.n_days || '—'} total`;
+            }
+            html += '</div></div>';
         }
 
         if (station.last_observation) {
