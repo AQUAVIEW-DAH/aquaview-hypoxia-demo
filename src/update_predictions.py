@@ -593,6 +593,21 @@ def main():
     model_stations = list(station_meta.keys())
     print(f"\nModels available for: {', '.join(s.upper() for s in model_stations)}")
 
+    # Load TimesFM reference data (benchmark metrics, model_type assignments)
+    tfm_ref_path = MODEL_DIR / "timesfm_reference.json"
+    tfm_ref = {}
+    tfm_model_info = {}
+    if tfm_ref_path.exists():
+        with open(tfm_ref_path) as f:
+            tfm_data = json.load(f)
+        tfm_ref = tfm_data.get('stations', {})
+        tfm_model_info = tfm_data.get('model_info', {})
+        tfm_stations = [sid for sid, v in tfm_ref.items() if v.get('timesfm_benchmark')]
+        xgb_stations = [sid for sid in model_stations if sid not in tfm_stations or not tfm_ref.get(sid, {}).get('timesfm_benchmark')]
+        print(f"  TimesFM reference: {len(tfm_stations)} TFM stations, {len(xgb_stations)} XGBoost stations")
+    else:
+        print("  No TimesFM reference data found (models/timesfm_reference.json)")
+
     # ── Step 0: Discover realtime feeds via AQUAVIEW ──
     print(f"\n[0/4] Discovering realtime feeds via AQUAVIEW...")
     aquaview_stations = discover_realtime_stations()
@@ -725,6 +740,22 @@ def main():
             entry['current'] = None
             entry['predictions'] = None
 
+        # Add model_type and TimesFM benchmark data from reference
+        sid_lower = sid if sid == sid.lower() else sid.lower()
+        if sid_lower in tfm_ref:
+            ref = tfm_ref[sid_lower]
+            if ref.get('timesfm_benchmark'):
+                entry['model_type'] = 'timesfm'
+                entry['timesfm_benchmark'] = ref['timesfm_benchmark']
+                if ref.get('n_days'):
+                    entry['n_days'] = ref['n_days']
+                if ref.get('n_hyp_days'):
+                    entry['n_hyp_days'] = ref['n_hyp_days']
+            elif has_model:
+                entry['model_type'] = 'xgboost'
+        elif has_model:
+            entry['model_type'] = 'xgboost'
+
         station_results.append(entry)
 
     # Enrich with registry + AQUAVIEW metadata (names, coordinates)
@@ -756,6 +787,16 @@ def main():
         'updated': datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ'),
         'update_interval_hours': 6,
         'stations': station_results,
+        'model_info': tfm_model_info if tfm_model_info else {
+            'xgboost': {
+                'description': 'Station-specific XGBoost classifier with engineered features',
+                'features': 'DO lags, rolling stats, satellite SST/chlorophyll, cross-station deltas',
+            },
+            'timesfm': {
+                'description': 'Google TimesFM foundation model for zero-shot DO forecasting',
+                'approach': 'Direct DO time series forecasting, threshold at 2.0 mg/L',
+            },
+        },
         'summary': {
             'total_stations': len(station_results),
             'stations_with_models': sum(1 for s in station_results if s['has_model']),

@@ -9,7 +9,7 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     permissions:
       contents: write
 
@@ -25,9 +25,14 @@ jobs:
       - name: Install dependencies
         run: pip install -q -r requirements.txt
 
-      - name: Run prediction update
+      - name: Run XGBoost prediction update
         working-directory: src
         run: python update_predictions.py
+
+      - name: Enhance with TimesFM zero-shot forecasts
+        working-directory: src
+        run: python timesfm_enhance.py
+        timeout-minutes: 15
 
       - name: Commit updated predictions
         run: |

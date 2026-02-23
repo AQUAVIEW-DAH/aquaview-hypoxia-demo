@@ -1,0 +1,397 @@
+{
+  "stations": {
+    "apqf1": {
+      "timesfm_benchmark": {
+        "1d": {
+          "auc_roc": 0.751,
+          "mae": 1.13
+        },
+        "3d": {
+          "auc_roc": 0.685,
+          "mae": 1.35
+        },
+        "5d": {
+          "auc_roc": 0.63,
+          "mae": 1.45
+        },
+        "7d": {
+          "auc_roc": 0.633,
+          "mae": 1.52
+        }
+      },
+      "n_days": 1258,
+      "n_hyp_days": 77
+    },
+    "gbhm6": {},
+    "adbf1": {
+      "timesfm_benchmark": {
+        "1d": {
+          "mae": 1.46,
+          "correlation": 0.716
+        },
+        "3d": {
+          "mae": 2.23,
+          "correlation": 0.238
+        },
+        "5d": {
+          "mae": 2.4,
+          "correlation": 0.04
+        },
+        "7d": {
+          "mae": 2.85,
+          "correlation": -0.382
+        }
+      },
+      "n_days": 74,
+      "n_hyp_days": 0
+    },
+    "frkf1": {
+      "timesfm_benchmark": {
+        "1d": {
+          "auc_roc": 0.832,
+          "mae": 1.46,
+          "correlation": 0.668
+        },
+        "3d": {
+          "auc_roc": 0.73,
+          "mae": 2.09,
+          "correlation": 0.341
+        },
+        "5d": {
+          "auc_roc": 0.579,
+          "mae": 2.35,
+          "correlation": 0.076
+        },
+        "7d": {
+          "auc_roc": 0.41,
+          "mae": 2.55,
+          "correlation": -0.119
+        }
+      },
+      "n_days": 616,
+      "n_hyp_days": 160
+    },
+    "kata1": {},
+    "mbla1": {},
+    "cwqt2": {
+      "timesfm_benchmark": {
+        "1d": {
+          "mae": 0.33,
+          "correlation": 0.931
+        },
+        "3d": {
+          "mae": 0.45,
+          "correlation": 0.855
+        },
+        "5d": {
+          "mae": 0.54,
+          "correlation": 0.783
+        },
+        "7d": {
+          "mae": 0.6,
+          "correlation": 0.728
+        }
+      },
+      "n_days": 2054,
+      "n_hyp_days": 12
+    },
+    "mqmt2": {
+      "timesfm_benchmark": {
+        "1d": {
+          "auc_roc": 0.831,
+          "mae": 0.48,
+          "correlation": 0.88
+        },
+        "3d": {
+          "auc_roc": 0.661,
+          "mae": 0.68,
+          "correlation": 0.73
+        },
+        "5d": {
+          "auc_roc": 0.493,
+          "mae": 0.84,
+          "correlation": 0.595
+        },
+        "7d": {
+          "auc_roc": 0.493,
+          "mae": 0.93,
+          "correlation": 0.516
+        }
+      },
+      "n_days": 1484,
+      "n_hyp_days": 30
+    },
+    "mwqt2": {
+      "timesfm_benchmark": {
+        "1d": {
+          "mae": 0.25,
+          "correlation": 0.908
+        },
+        "3d": {
+          "mae": 0.34,
+          "correlation": 0.842
+        },
+        "5d": {
+          "mae": 0.42,
+          "correlation": 0.79
+        },
+        "7d": {
+          "mae": 0.45,
+          "correlation": 0.757
+        }
+      },
+      "n_days": 566,
+      "n_hyp_days": 0
+    },
+    "crta1": {
+      "timesfm_benchmark": {
+        "1d": {
+          "auc_roc": 0.897,
+          "mae": 0.78
+        },
+        "3d": {
+          "auc_roc": 0.85,
+          "mae": 0.89
+        },
+        "5d": {
+          "auc_roc": 0.759,
+          "mae": 0.96
+        },
+        "7d": {
+          "auc_roc": 0.758,
+          "mae": 1.04
+        }
+      },
+      "n_days": 3362,
+      "n_hyp_days": 48
+    },
+    "gbcm6": {
+      "timesfm_benchmark": {
+        "1d": {
+          "mae": 0.62,
+          "correlation": 0.848
+        },
+        "3d": {
+          "mae": 0.72,
+          "correlation": 0.795
+        },
+        "5d": {
+          "mae": 0.8,
+          "correlation": 0.765
+        },
+        "7d": {
+          "mae": 0.87,
+          "correlation": 0.759
+        }
+      },
+      "n_days": 480,
+      "n_hyp_days": 0
+    },
+    "bsca1": {},
+    "dpha1": {
+      "timesfm_benchmark": {
+        "1d": {
+          "auc_roc": 0.832,
+          "mae": 0.56,
+          "correlation": 0.916
+        },
+        "3d": {
+          "auc_roc": 0.664,
+          "mae": 0.66,
+          "correlation": 0.877
+        },
+        "5d": {
+          "auc_roc": 0.497,
+          "mae": 0.72,
+          "correlation": 0.847
+        },
+        "7d": {
+          "auc_roc": 0.497,
+          "mae": 0.77,
+          "correlation": 0.819
+        }
+      },
+      "n_days": 4136,
+      "n_hyp_days": 17
+    },
+    "ppta1": {
+      "timesfm_benchmark": {
+        "1d": {
+          "mae": 0.35,
+          "correlation": 0.912
+        },
+        "3d": {
+          "mae": 0.43,
+          "correlation": 0.869
+        },
+        "5d": {
+          "mae": 0.48,
+          "correlation": 0.842
+        },
+        "7d": {
+          "mae": 0.52,
+          "correlation": 0.815
+        }
+      },
+      "n_days": 3006,
+      "n_hyp_days": 0
+    },
+    "mhpa1": {
+      "timesfm_benchmark": {
+        "1d": {
+          "auc_roc": 0.978,
+          "mae": 0.65,
+          "correlation": 0.902
+        },
+        "3d": {
+          "auc_roc": 0.956,
+          "mae": 0.82,
+          "correlation": 0.843
+        },
+        "5d": {
+          "auc_roc": 0.914,
+          "mae": 0.89,
+          "correlation": 0.805
+        },
+        "7d": {
+          "auc_roc": 0.913,
+          "mae": 0.95,
+          "correlation": 0.769
+        }
+      },
+      "n_days": 4090,
+      "n_hyp_days": 26
+    },
+    "wkqa1": {
+      "timesfm_benchmark": {
+        "1d": {
+          "mae": 0.92,
+          "correlation": 0.871
+        },
+        "3d": {
+          "mae": 1.17,
+          "correlation": 0.781
+        },
+        "5d": {
+          "mae": 1.25,
+          "correlation": 0.74
+        },
+        "7d": {
+          "mae": 1.31,
+          "correlation": 0.698
+        }
+      },
+      "n_days": 1567,
+      "n_hyp_days": 4
+    },
+    "gdqm6": {
+      "timesfm_benchmark": {
+        "1d": {
+          "auc_roc": 0.498,
+          "mae": 0.61,
+          "correlation": 0.895
+        },
+        "3d": {
+          "auc_roc": 0.5,
+          "mae": 0.77,
+          "correlation": 0.825
+        },
+        "5d": {
+          "auc_roc": 0.5,
+          "mae": 0.83,
+          "correlation": 0.798
+        },
+        "7d": {
+          "auc_roc": 0.5,
+          "mae": 0.87,
+          "correlation": 0.781
+        }
+      },
+      "n_days": 1961,
+      "n_hyp_days": 17
+    },
+    "maqt2": {
+      "timesfm_benchmark": {
+        "1d": {
+          "mae": 0.35,
+          "correlation": 0.913
+        },
+        "3d": {
+          "mae": 0.52,
+          "correlation": 0.822
+        },
+        "5d": {
+          "mae": 0.64,
+          "correlation": 0.721
+        },
+        "7d": {
+          "mae": 0.74,
+          "correlation": 0.632
+        }
+      },
+      "n_days": 1154,
+      "n_hyp_days": 2
+    },
+    "rkqf1": {
+      "timesfm_benchmark": {
+        "1d": {
+          "auc_roc": 0.902,
+          "mae": 0.52,
+          "correlation": 0.786
+        },
+        "3d": {
+          "auc_roc": 0.642,
+          "mae": 0.67,
+          "correlation": 0.619
+        },
+        "5d": {
+          "auc_roc": 0.474,
+          "mae": 0.78,
+          "correlation": 0.466
+        },
+        "7d": {
+          "auc_roc": 0.478,
+          "mae": 0.86,
+          "correlation": 0.303
+        }
+      },
+      "n_days": 563,
+      "n_hyp_days": 6
+    },
+    "clbf1": {
+      "timesfm_benchmark": {
+        "1d": {
+          "mae": 0.61,
+          "correlation": 0.608
+        },
+        "3d": {
+          "mae": 0.63,
+          "correlation": 0.597
+        },
+        "5d": {
+          "mae": 0.62,
+          "correlation": 0.603
+        },
+        "7d": {
+          "mae": 0.62,
+          "correlation": 0.597
+        }
+      },
+      "n_days": 1186,
+      "n_hyp_days": 0
+    }
+  },
+  "model_info": {
+    "xgboost": {
+      "description": "Station-specific XGBoost classifier with engineered features",
+      "features": "DO lags, rolling stats, satellite SST/chlorophyll, cross-station deltas",
+      "training": "Per-station with 70/30 temporal split"
+    },
+    "timesfm": {
+      "description": "Google TimesFM 1.0 (200M params) zero-shot forecast",
+      "approach": "Direct DO time-series forecasting with quantile uncertainty estimation",
+      "note": "Used for stations with insufficient training events for XGBoost, excels on sparse-data stations",
+      "benchmark": "AUC-ROC up to 0.91 on sparse stations where XGBoost fails (< 0.30)"
+    }
+  }
+}
