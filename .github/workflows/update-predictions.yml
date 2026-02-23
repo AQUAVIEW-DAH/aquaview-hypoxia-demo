@@ -33,6 +33,7 @@ jobs:
         working-directory: src
         run: python timesfm_enhance.py
         timeout-minutes: 15
+        continue-on-error: true
 
       - name: Commit updated predictions
         run: |
