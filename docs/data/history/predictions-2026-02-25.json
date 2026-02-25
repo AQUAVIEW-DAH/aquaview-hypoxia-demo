@@ -1,10 +1,10 @@
 {
-  "updated": "2026-02-25T07:12:39Z",
+  "updated": "2026-02-25T13:24:41Z",
   "update_interval_hours": 6,
   "stations": [
     {
-      "id": "MBLA1",
-      "name": "MBLA1",
+      "id": "BSCA1",
+      "name": "BSCA1",
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
@@ -13,158 +13,36 @@
       "model_type": "xgboost"
     },
     {
-      "id": "TPEF1",
-      "name": "Tarpon Bay East, FL",
+      "id": "BDVF1",
+      "name": "Broad River, FL",
       "has_model": false,
       "has_realtime": true,
       "status": "active",
       "current": {
         "do": null,
-        "temp": 20.1,
+        "temp": 19.4,
         "sal": 18.4
       },
       "last_observation": "2026-02-25",
       "days_of_data": 46,
-      "lat": 25.41,
-      "lon": -80.964
+      "lat": 25.478,
+      "lon": -80.989
     },
     {
-      "id": "THRF1",
-      "name": "Thursday Point, FL",
+      "id": "LMRF1",
+      "name": "Lostmans River, FL",
       "has_model": false,
       "has_realtime": true,
       "status": "active",
       "current": {
         "do": null,
-        "temp": 18.3,
-        "sal": 32.6
+        "temp": 18.1,
+        "sal": 35.4
       },
       "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.203,
-      "lon": -80.372
-    },
-    {
-      "id": "NRRF1",
-      "name": "North River, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 16.9,
-        "sal": 20.4
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.338,
-      "lon": -80.911
-    },
-    {
-      "id": "GBTF1",
-      "name": "Garfield Bight, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 16.3,
-        "sal": 41.4
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.167,
-      "lon": -80.801
-    },
-    {
-      "id": "GBHM6",
-      "name": "Bayou Heron, Grand Bay Reserve, MS",
-      "has_model": true,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": 7.98,
-        "temp": 15.3,
-        "sal": 21.8
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "currently_hypoxic": false,
-      "predictions": {
-        "1d": {
-          "prob": 0.0134,
-          "risk": "low"
-        },
-        "3d": {
-          "prob": 0.0297,
-          "risk": "low"
-        },
-        "5d": {
-          "prob": 0.0673,
-          "risk": "low"
-        },
-        "7d": {
-          "prob": 0.0961,
-          "risk": "low"
-        }
-      },
-      "metrics": {
-        "1": {
-          "auc_roc": 0,
-          "auc_pr": 0,
-          "f1": 0.0
-        },
-        "3": {
-          "auc_roc": 0,
-          "auc_pr": 0,
-          "f1": 0.0
-        },
-        "5": {
-          "auc_roc": 0,
-          "auc_pr": 0,
-          "f1": 0.0
-        },
-        "7": {
-          "auc_roc": 0,
-          "auc_pr": 0,
-          "f1": 0.0
-        }
-      },
-      "model_type": "xgboost",
-      "lat": 30.418,
-      "lon": -88.405
-    },
-    {
-      "id": "DKKF1",
-      "name": "Duck Key, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 17.4,
-        "sal": 32.1
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.18,
-      "lon": -80.49
-    },
-    {
-      "id": "CANF1",
-      "name": "Cane Patch, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 19.9,
-        "sal": 6.7
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.422,
-      "lon": -80.942
+      "days_of_data": 43,
+      "lat": 25.556,
+      "lon": -81.169
     },
     {
       "id": "SREF1",
@@ -174,13 +52,542 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 19.8,
-        "sal": 35.3
+        "temp": 19.4,
+        "sal": 35.0
       },
       "last_observation": "2026-02-25",
       "days_of_data": 46,
       "lat": 25.352,
       "lon": -81.1
+    },
+    {
+      "id": "CANF1",
+      "name": "Cane Patch, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 19.4,
+        "sal": 5.7
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.422,
+      "lon": -80.942
+    },
+    {
+      "id": "WIWF1",
+      "name": "Willy Willy, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 16.6,
+        "sal": 22.9
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.587,
+      "lon": -81.044
+    },
+    {
+      "id": "BSKF1",
+      "name": "Big Sable Creek, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 15.3,
+        "sal": 38.3
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.266,
+      "lon": -81.162
+    },
+    {
+      "id": "TBYF1",
+      "name": "Terrapin Bay, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 15.9,
+        "sal": 29.3
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.155,
+      "lon": -80.722
+    },
+    {
+      "id": "BWSF1",
+      "name": "Blackwater Sound, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 19.0,
+        "sal": 32.4
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.178,
+      "lon": -80.438
+    },
+    {
+      "id": "GBCM6",
+      "name": "Bayou Cumbest, Grand Bay Reserve, MS",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": 7.33,
+        "temp": 19.7,
+        "sal": 28.3
+      },
+      "last_observation": "2026-02-12",
+      "days_of_data": 3,
+      "currently_hypoxic": false,
+      "model_type": "timesfm",
+      "timesfm_benchmark": {
+        "1d": {
+          "mae": 0.62,
+          "correlation": 0.848
+        },
+        "3d": {
+          "mae": 0.72,
+          "correlation": 0.795
+        },
+        "5d": {
+          "mae": 0.8,
+          "correlation": 0.765
+        },
+        "7d": {
+          "mae": 0.87,
+          "correlation": 0.759
+        }
+      },
+      "n_days": 480,
+      "lat": 30.384,
+      "lon": -88.436
+    },
+    {
+      "id": "KATA1",
+      "name": "KATA1",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "xgboost"
+    },
+    {
+      "id": "LBSF1",
+      "name": "Little Blackwater, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 17.2,
+        "sal": 31.6
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.214,
+      "lon": -80.432
+    },
+    {
+      "id": "JKYF1",
+      "name": "Johnson Key, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 15.3,
+        "sal": 39.3
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.053,
+      "lon": -80.904
+    },
+    {
+      "id": "CWAF1",
+      "name": "Clear Water Pass, FL ",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 17.9,
+        "sal": 30.1
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.297,
+      "lon": -81.013
+    },
+    {
+      "id": "GBIF1",
+      "name": "Gunboat Island, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 19.2,
+        "sal": 26.1
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.378,
+      "lon": -81.029
+    },
+    {
+      "id": "41068",
+      "name": "Fort Pierce, FL (FTP)",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 20.7,
+        "sal": 36.5
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 27.593,
+      "lon": -80.189
+    },
+    {
+      "id": "CRTA1",
+      "name": "CRTA1",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "timesfm",
+      "timesfm_benchmark": {
+        "1d": {
+          "auc_roc": 0.897,
+          "mae": 0.78
+        },
+        "3d": {
+          "auc_roc": 0.85,
+          "mae": 0.89
+        },
+        "5d": {
+          "auc_roc": 0.759,
+          "mae": 0.96
+        },
+        "7d": {
+          "auc_roc": 0.758,
+          "mae": 1.04
+        }
+      },
+      "n_days": 3362,
+      "n_hyp_days": 48
+    },
+    {
+      "id": "HCEF1",
+      "name": "Highway Creek, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 16.4,
+        "sal": 32.2
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.254,
+      "lon": -80.444
+    },
+    {
+      "id": "APQF1",
+      "name": "APQF1",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "timesfm",
+      "timesfm_benchmark": {
+        "1d": {
+          "auc_roc": 0.751,
+          "mae": 1.13
+        },
+        "3d": {
+          "auc_roc": 0.685,
+          "mae": 1.35
+        },
+        "5d": {
+          "auc_roc": 0.63,
+          "mae": 1.45
+        },
+        "7d": {
+          "auc_roc": 0.633,
+          "mae": 1.52
+        }
+      },
+      "n_days": 1258,
+      "n_hyp_days": 77
+    },
+    {
+      "id": "HREF1",
+      "name": "Harney River, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 19.7,
+        "sal": 25.0
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.424,
+      "lon": -81.06
+    },
+    {
+      "id": "CWWT2",
+      "name": "Copano Bay West, Mission-Aransas Reserve, TX",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": 7.27,
+        "temp": 20.0,
+        "sal": 35.4
+      },
+      "last_observation": "2026-02-12",
+      "days_of_data": 2,
+      "currently_hypoxic": false,
+      "lat": 28.084,
+      "lon": -97.201
+    },
+    {
+      "id": "LSNF1",
+      "name": "Long Sound, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 17.3,
+        "sal": 31.9
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.235,
+      "lon": -80.457
+    },
+    {
+      "id": "JBYF1",
+      "name": "Joe Bay, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 17.6,
+        "sal": 29.7
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 45,
+      "lat": 25.224,
+      "lon": -80.541
+    },
+    {
+      "id": "CNBF1",
+      "name": "Cannon Bay, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 18.9,
+        "sal": 33.0
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.702,
+      "lon": -81.186
+    },
+    {
+      "id": "MWQT2",
+      "name": "Ship Channel, Mission-Aransas Reserve, TX",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": 7.52,
+        "temp": 18.0,
+        "sal": 35.2
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "currently_hypoxic": false,
+      "model_type": "timesfm",
+      "timesfm_benchmark": {
+        "1d": {
+          "mae": 0.25,
+          "correlation": 0.908
+        },
+        "3d": {
+          "mae": 0.34,
+          "correlation": 0.842
+        },
+        "5d": {
+          "mae": 0.42,
+          "correlation": 0.79
+        },
+        "7d": {
+          "mae": 0.45,
+          "correlation": 0.757
+        }
+      },
+      "n_days": 566,
+      "lat": 27.838,
+      "lon": -97.05
+    },
+    {
+      "id": "LRIF1",
+      "name": "Lane River, FL ",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 17.6,
+        "sal": 19.5
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.284,
+      "lon": -80.894
+    },
+    {
+      "id": "TCVF1",
+      "name": "Trout Cove, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 17.4,
+        "sal": 27.5
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.213,
+      "lon": -80.533
+    },
+    {
+      "id": "LMDF1",
+      "name": "Little Madeira, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 17.2,
+        "sal": 28.9
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.176,
+      "lon": -80.633
+    },
+    {
+      "id": "BOBF1",
+      "name": "Bob Allen, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 15.7,
+        "sal": 38.7
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.027,
+      "lon": -80.681
+    },
+    {
+      "id": "MUKF1",
+      "name": "Murray Key, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 16.0,
+        "sal": 38.9
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.106,
+      "lon": -80.942
+    },
+    {
+      "id": "BNKF1",
+      "name": "Butternut Key, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 16.9,
+        "sal": 32.3
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.087,
+      "lon": -80.519
+    },
+    {
+      "id": "GBTF1",
+      "name": "Garfield Bight, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 15.1,
+        "sal": 43.5
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.167,
+      "lon": -80.801
+    },
+    {
+      "id": "41069",
+      "name": "Ponce de Leon Inlet, FL (PNC)",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 16.4,
+        "sal": 35.4
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 29.289,
+      "lon": -80.803
     },
     {
       "id": "ADBF1",
@@ -220,20 +627,68 @@
       "lon": -85.058
     },
     {
-      "id": "BSKF1",
-      "name": "Big Sable Creek, FL",
+      "id": "NRRF1",
+      "name": "North River, FL",
       "has_model": false,
       "has_realtime": true,
       "status": "active",
       "current": {
         "do": null,
-        "temp": 15.9,
-        "sal": 37.9
+        "temp": 16.3,
+        "sal": 20.1
       },
       "last_observation": "2026-02-25",
       "days_of_data": 46,
-      "lat": 25.266,
-      "lon": -81.162
+      "lat": 25.338,
+      "lon": -80.911
+    },
+    {
+      "id": "42026",
+      "name": "C22 - Loop Current Pressure Point Buoy, 70m Isobath",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 21.4,
+        "sal": 36.9
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.171,
+      "lon": -83.475
+    },
+    {
+      "id": "DKKF1",
+      "name": "Duck Key, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 16.9,
+        "sal": 32.3
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.18,
+      "lon": -80.49
+    },
+    {
+      "id": "THRF1",
+      "name": "Thursday Point, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 17.8,
+        "sal": 32.7
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.203,
+      "lon": -80.372
     },
     {
       "id": "WPLF1",
@@ -243,8 +698,8 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 18.3,
-        "sal": 37.9
+        "temp": 18.0,
+        "sal": 37.6
       },
       "last_observation": "2026-02-25",
       "days_of_data": 42,
@@ -252,84 +707,228 @@
       "lon": -81.249
     },
     {
-      "id": "CNBF1",
-      "name": "Cannon Bay, FL",
+      "id": "MNBF1",
+      "name": "Manatee Bay, FL",
       "has_model": false,
       "has_realtime": true,
       "status": "active",
       "current": {
         "do": null,
-        "temp": 19.6,
-        "sal": 33.1
+        "temp": 17.3,
+        "sal": 32.3
       },
       "last_observation": "2026-02-25",
       "days_of_data": 46,
-      "lat": 25.702,
-      "lon": -81.186
+      "lat": 25.239,
+      "lon": -80.422
     },
     {
-      "id": "LRIF1",
-      "name": "Lane River, FL ",
+      "id": "TRRF1",
+      "name": "Taylor River, FL",
       "has_model": false,
       "has_realtime": true,
       "status": "active",
       "current": {
         "do": null,
-        "temp": 18.6,
-        "sal": 19.6
+        "temp": 18.1,
+        "sal": 17.7
       },
       "last_observation": "2026-02-25",
       "days_of_data": 46,
-      "lat": 25.284,
-      "lon": -80.894
+      "lat": 25.217,
+      "lon": -80.65
     },
     {
-      "id": "MUKF1",
-      "name": "Murray Key, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 18.0,
-        "sal": 38.7
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.106,
-      "lon": -80.942
+      "id": "MBLA1",
+      "name": "MBLA1",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "xgboost"
     },
     {
-      "id": "LSNF1",
-      "name": "Long Sound, FL",
+      "id": "WWEF1",
+      "name": "Whitewater Bay-East, FL",
       "has_model": false,
       "has_realtime": true,
       "status": "active",
       "current": {
         "do": null,
-        "temp": 18.2,
-        "sal": 31.8
+        "temp": 18.1,
+        "sal": 19.2
       },
       "last_observation": "2026-02-25",
       "days_of_data": 46,
-      "lat": 25.235,
-      "lon": -80.457
+      "lat": 25.232,
+      "lon": -80.938
     },
     {
-      "id": "GBIF1",
-      "name": "Gunboat Island, FL",
+      "id": "TPEF1",
+      "name": "Tarpon Bay East, FL",
       "has_model": false,
       "has_realtime": true,
       "status": "active",
       "current": {
         "do": null,
-        "temp": 20.3,
-        "sal": 30.5
+        "temp": 19.0,
+        "sal": 17.7
       },
       "last_observation": "2026-02-25",
       "days_of_data": 46,
-      "lat": 25.378,
-      "lon": -81.029
+      "lat": 25.41,
+      "lon": -80.964
+    },
+    {
+      "id": "MQMT2",
+      "name": "Mesquite Bay, Mission-Aransas Reserve, TX",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": 7.94,
+        "temp": 17.0,
+        "sal": 32.4
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "currently_hypoxic": false,
+      "model_type": "timesfm",
+      "timesfm_benchmark": {
+        "1d": {
+          "auc_roc": 0.831,
+          "mae": 0.48,
+          "correlation": 0.88
+        },
+        "3d": {
+          "auc_roc": 0.661,
+          "mae": 0.68,
+          "correlation": 0.73
+        },
+        "5d": {
+          "auc_roc": 0.493,
+          "mae": 0.84,
+          "correlation": 0.595
+        },
+        "7d": {
+          "auc_roc": 0.493,
+          "mae": 0.93,
+          "correlation": 0.516
+        }
+      },
+      "n_days": 1484,
+      "n_hyp_days": 30,
+      "lat": 28.138,
+      "lon": -96.829
+    },
+    {
+      "id": "BKYF1",
+      "name": "Buoy Key, FL",
+      "has_model": false,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": null,
+        "temp": 14.6,
+        "sal": 40.2
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "lat": 25.119,
+      "lon": -80.834
+    },
+    {
+      "id": "FRKF1",
+      "name": "FRKF1",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "timesfm",
+      "timesfm_benchmark": {
+        "1d": {
+          "auc_roc": 0.832,
+          "mae": 1.46,
+          "correlation": 0.668
+        },
+        "3d": {
+          "auc_roc": 0.73,
+          "mae": 2.09,
+          "correlation": 0.341
+        },
+        "5d": {
+          "auc_roc": 0.579,
+          "mae": 2.35,
+          "correlation": 0.076
+        },
+        "7d": {
+          "auc_roc": 0.41,
+          "mae": 2.55,
+          "correlation": -0.119
+        }
+      },
+      "n_days": 616,
+      "n_hyp_days": 160
+    },
+    {
+      "id": "GBHM6",
+      "name": "Bayou Heron, Grand Bay Reserve, MS",
+      "has_model": true,
+      "has_realtime": true,
+      "status": "active",
+      "current": {
+        "do": 7.47,
+        "temp": 15.2,
+        "sal": 21.8
+      },
+      "last_observation": "2026-02-25",
+      "days_of_data": 46,
+      "currently_hypoxic": false,
+      "predictions": {
+        "1d": {
+          "prob": 0.0143,
+          "risk": "low"
+        },
+        "3d": {
+          "prob": 0.0302,
+          "risk": "low"
+        },
+        "5d": {
+          "prob": 0.0664,
+          "risk": "low"
+        },
+        "7d": {
+          "prob": 0.0891,
+          "risk": "low"
+        }
+      },
+      "metrics": {
+        "1": {
+          "auc_roc": 0,
+          "auc_pr": 0,
+          "f1": 0.0
+        },
+        "3": {
+          "auc_roc": 0,
+          "auc_pr": 0,
+          "f1": 0.0
+        },
+        "5": {
+          "auc_roc": 0,
+          "auc_pr": 0,
+          "f1": 0.0
+        },
+        "7": {
+          "auc_roc": 0,
+          "auc_pr": 0,
+          "f1": 0.0
+        }
+      },
+      "model_type": "xgboost",
+      "lat": 30.418,
+      "lon": -88.405
     },
     {
       "id": "CWQT2",
@@ -370,376 +969,6 @@
       "lon": -97.034
     },
     {
-      "id": "APQF1",
-      "name": "APQF1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "timesfm",
-      "timesfm_benchmark": {
-        "1d": {
-          "auc_roc": 0.751,
-          "mae": 1.13
-        },
-        "3d": {
-          "auc_roc": 0.685,
-          "mae": 1.35
-        },
-        "5d": {
-          "auc_roc": 0.63,
-          "mae": 1.45
-        },
-        "7d": {
-          "auc_roc": 0.633,
-          "mae": 1.52
-        }
-      },
-      "n_days": 1258,
-      "n_hyp_days": 77
-    },
-    {
-      "id": "LMRF1",
-      "name": "Lostmans River, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 17.9,
-        "sal": 36.8
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 43,
-      "lat": 25.556,
-      "lon": -81.169
-    },
-    {
-      "id": "HCEF1",
-      "name": "Highway Creek, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 17.3,
-        "sal": 32.1
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.254,
-      "lon": -80.444
-    },
-    {
-      "id": "WWEF1",
-      "name": "Whitewater Bay-East, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 18.6,
-        "sal": 19.2
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.232,
-      "lon": -80.938
-    },
-    {
-      "id": "MQMT2",
-      "name": "Mesquite Bay, Mission-Aransas Reserve, TX",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": 8.02,
-        "temp": 17.1,
-        "sal": 32.5
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "currently_hypoxic": false,
-      "model_type": "timesfm",
-      "timesfm_benchmark": {
-        "1d": {
-          "auc_roc": 0.831,
-          "mae": 0.48,
-          "correlation": 0.88
-        },
-        "3d": {
-          "auc_roc": 0.661,
-          "mae": 0.68,
-          "correlation": 0.73
-        },
-        "5d": {
-          "auc_roc": 0.493,
-          "mae": 0.84,
-          "correlation": 0.595
-        },
-        "7d": {
-          "auc_roc": 0.493,
-          "mae": 0.93,
-          "correlation": 0.516
-        }
-      },
-      "n_days": 1484,
-      "n_hyp_days": 30,
-      "lat": 28.138,
-      "lon": -96.829
-    },
-    {
-      "id": "41068",
-      "name": "Fort Pierce, FL (FTP)",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 20.8,
-        "sal": 36.5
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 27.593,
-      "lon": -80.189
-    },
-    {
-      "id": "TBYF1",
-      "name": "Terrapin Bay, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 17.0,
-        "sal": 29.7
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.155,
-      "lon": -80.722
-    },
-    {
-      "id": "CWAF1",
-      "name": "Clear Water Pass, FL ",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 18.7,
-        "sal": 29.8
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.297,
-      "lon": -81.013
-    },
-    {
-      "id": "BSCA1",
-      "name": "BSCA1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "xgboost"
-    },
-    {
-      "id": "LMDF1",
-      "name": "Little Madeira, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 17.3,
-        "sal": 27.9
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.176,
-      "lon": -80.633
-    },
-    {
-      "id": "JBYF1",
-      "name": "Joe Bay, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 17.9,
-        "sal": 29.6
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 45,
-      "lat": 25.224,
-      "lon": -80.541
-    },
-    {
-      "id": "TCVF1",
-      "name": "Trout Cove, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 18.4,
-        "sal": 27.3
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.213,
-      "lon": -80.533
-    },
-    {
-      "id": "BDVF1",
-      "name": "Broad River, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 19.5,
-        "sal": 18.4
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.478,
-      "lon": -80.989
-    },
-    {
-      "id": "CWWT2",
-      "name": "Copano Bay West, Mission-Aransas Reserve, TX",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": 7.27,
-        "temp": 20.0,
-        "sal": 35.4
-      },
-      "last_observation": "2026-02-12",
-      "days_of_data": 2,
-      "currently_hypoxic": false,
-      "lat": 28.084,
-      "lon": -97.201
-    },
-    {
-      "id": "BNKF1",
-      "name": "Butternut Key, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 17.4,
-        "sal": 32.3
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.087,
-      "lon": -80.519
-    },
-    {
-      "id": "KATA1",
-      "name": "KATA1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "xgboost"
-    },
-    {
-      "id": "42026",
-      "name": "C22 - Loop Current Pressure Point Buoy, 70m Isobath",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 21.4,
-        "sal": 36.9
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.171,
-      "lon": -83.475
-    },
-    {
-      "id": "HREF1",
-      "name": "Harney River, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 20.5,
-        "sal": 29.9
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.424,
-      "lon": -81.06
-    },
-    {
-      "id": "GBCM6",
-      "name": "Bayou Cumbest, Grand Bay Reserve, MS",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": 7.33,
-        "temp": 19.7,
-        "sal": 28.3
-      },
-      "last_observation": "2026-02-12",
-      "days_of_data": 3,
-      "currently_hypoxic": false,
-      "model_type": "timesfm",
-      "timesfm_benchmark": {
-        "1d": {
-          "mae": 0.62,
-          "correlation": 0.848
-        },
-        "3d": {
-          "mae": 0.72,
-          "correlation": 0.795
-        },
-        "5d": {
-          "mae": 0.8,
-          "correlation": 0.765
-        },
-        "7d": {
-          "mae": 0.87,
-          "correlation": 0.759
-        }
-      },
-      "n_days": 480,
-      "lat": 30.384,
-      "lon": -88.436
-    },
-    {
-      "id": "41069",
-      "name": "Ponce de Leon Inlet, FL (PNC)",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 16.4,
-        "sal": 35.4
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 29.289,
-      "lon": -80.803
-    },
-    {
       "id": "MDKF1",
       "name": "Middle Key, FL",
       "has_model": false,
@@ -747,242 +976,13 @@
       "status": "active",
       "current": {
         "do": null,
-        "temp": 18.3,
-        "sal": 33.5
+        "temp": 17.3,
+        "sal": 33.7
       },
       "last_observation": "2026-02-25",
       "days_of_data": 46,
       "lat": 25.289,
       "lon": -80.396
-    },
-    {
-      "id": "BKYF1",
-      "name": "Buoy Key, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 15.7,
-        "sal": 40.9
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.119,
-      "lon": -80.834
-    },
-    {
-      "id": "WIWF1",
-      "name": "Willy Willy, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 17.9,
-        "sal": 23.1
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.587,
-      "lon": -81.044
-    },
-    {
-      "id": "LBSF1",
-      "name": "Little Blackwater, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 18.0,
-        "sal": 31.5
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.214,
-      "lon": -80.432
-    },
-    {
-      "id": "MWQT2",
-      "name": "Ship Channel, Mission-Aransas Reserve, TX",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": 7.62,
-        "temp": 17.9,
-        "sal": 35.0
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "currently_hypoxic": false,
-      "model_type": "timesfm",
-      "timesfm_benchmark": {
-        "1d": {
-          "mae": 0.25,
-          "correlation": 0.908
-        },
-        "3d": {
-          "mae": 0.34,
-          "correlation": 0.842
-        },
-        "5d": {
-          "mae": 0.42,
-          "correlation": 0.79
-        },
-        "7d": {
-          "mae": 0.45,
-          "correlation": 0.757
-        }
-      },
-      "n_days": 566,
-      "lat": 27.838,
-      "lon": -97.05
-    },
-    {
-      "id": "TRRF1",
-      "name": "Taylor River, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 18.2,
-        "sal": 17.8
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.217,
-      "lon": -80.65
-    },
-    {
-      "id": "CRTA1",
-      "name": "CRTA1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "timesfm",
-      "timesfm_benchmark": {
-        "1d": {
-          "auc_roc": 0.897,
-          "mae": 0.78
-        },
-        "3d": {
-          "auc_roc": 0.85,
-          "mae": 0.89
-        },
-        "5d": {
-          "auc_roc": 0.759,
-          "mae": 0.96
-        },
-        "7d": {
-          "auc_roc": 0.758,
-          "mae": 1.04
-        }
-      },
-      "n_days": 3362,
-      "n_hyp_days": 48
-    },
-    {
-      "id": "JKYF1",
-      "name": "Johnson Key, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 16.5,
-        "sal": 39.2
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.053,
-      "lon": -80.904
-    },
-    {
-      "id": "BWSF1",
-      "name": "Blackwater Sound, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 19.7,
-        "sal": 32.4
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.178,
-      "lon": -80.438
-    },
-    {
-      "id": "MNBF1",
-      "name": "Manatee Bay, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 18.3,
-        "sal": 32.2
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.239,
-      "lon": -80.422
-    },
-    {
-      "id": "BOBF1",
-      "name": "Bob Allen, FL",
-      "has_model": false,
-      "has_realtime": true,
-      "status": "active",
-      "current": {
-        "do": null,
-        "temp": 15.9,
-        "sal": 38.8
-      },
-      "last_observation": "2026-02-25",
-      "days_of_data": 46,
-      "lat": 25.027,
-      "lon": -80.681
-    },
-    {
-      "id": "FRKF1",
-      "name": "FRKF1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "timesfm",
-      "timesfm_benchmark": {
-        "1d": {
-          "auc_roc": 0.832,
-          "mae": 1.46,
-          "correlation": 0.668
-        },
-        "3d": {
-          "auc_roc": 0.73,
-          "mae": 2.09,
-          "correlation": 0.341
-        },
-        "5d": {
-          "auc_roc": 0.579,
-          "mae": 2.35,
-          "correlation": 0.076
-        },
-        "7d": {
-          "auc_roc": 0.41,
-          "mae": 2.55,
-          "correlation": -0.119
-        }
-      },
-      "n_days": 616,
-      "n_hyp_days": 160
     }
   ],
   "model_info": {
