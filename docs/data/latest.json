@@ -389,7 +389,7 @@
     {
       "id": "MQMT2",
       "name": "Mesquite Bay, Mission-Aransas Reserve, TX",
-      "has_model": false,
+      "has_model": true,
       "has_realtime": true,
       "status": "active",
       "current": {
@@ -426,7 +426,35 @@
       "n_days": 1484,
       "n_hyp_days": 30,
       "lat": 28.138,
-      "lon": -96.829
+      "lon": -96.829,
+      "predictions": {
+        "1d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 6.21
+        },
+        "3d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 6.73
+        },
+        "5d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 7.21
+        },
+        "7d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 6.92
+        }
+      },
+      "do_forecast": {
+        "1d": 6.21,
+        "3d": 6.73,
+        "5d": 7.21,
+        "7d": 6.92
+      }
     },
     {
       "id": "JBYF1",
@@ -597,7 +625,7 @@
     {
       "id": "ADBF1",
       "name": "Dry Bar, Apalachicola Reserve, FL",
-      "has_model": false,
+      "has_model": true,
       "has_realtime": true,
       "status": "active",
       "current": {
@@ -629,7 +657,35 @@
       },
       "n_days": 74,
       "lat": 29.675,
-      "lon": -85.058
+      "lon": -85.058,
+      "predictions": {
+        "1d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 8.12
+        },
+        "3d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 8.51
+        },
+        "5d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 8.51
+        },
+        "7d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 8.45
+        }
+      },
+      "do_forecast": {
+        "1d": 8.12,
+        "3d": 8.51,
+        "5d": 8.51,
+        "7d": 8.45
+      }
     },
     {
       "id": "LMDF1",
@@ -650,7 +706,7 @@
     {
       "id": "MWQT2",
       "name": "Ship Channel, Mission-Aransas Reserve, TX",
-      "has_model": false,
+      "has_model": true,
       "has_realtime": true,
       "status": "active",
       "current": {
@@ -682,7 +738,35 @@
       },
       "n_days": 566,
       "lat": 27.838,
-      "lon": -97.05
+      "lon": -97.05,
+      "predictions": {
+        "1d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 6.55
+        },
+        "3d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 6.69
+        },
+        "5d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 6.91
+        },
+        "7d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 6.92
+        }
+      },
+      "do_forecast": {
+        "1d": 6.55,
+        "3d": 6.69,
+        "5d": 6.91,
+        "7d": 6.92
+      }
     },
     {
       "id": "TRRF1",
@@ -886,8 +970,31 @@
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
-      "current": null,
-      "predictions": null,
+      "current": {
+        "do": 2.23
+      },
+      "predictions": {
+        "1d": {
+          "prob": 0.424,
+          "risk": "moderate",
+          "predicted_do": 2.88
+        },
+        "3d": {
+          "prob": 0.3127,
+          "risk": "moderate",
+          "predicted_do": 4.46
+        },
+        "5d": {
+          "prob": 0.2724,
+          "risk": "low",
+          "predicted_do": 5.54
+        },
+        "7d": {
+          "prob": 0.2648,
+          "risk": "low",
+          "predicted_do": 6.11
+        }
+      },
       "model_type": "timesfm",
       "timesfm_benchmark": {
         "1d": {
@@ -908,7 +1015,14 @@
         }
       },
       "n_days": 1258,
-      "n_hyp_days": 77
+      "n_hyp_days": 77,
+      "do_forecast": {
+        "1d": 2.88,
+        "3d": 4.46,
+        "5d": 5.54,
+        "7d": 6.11
+      },
+      "currently_hypoxic": false
     },
     {
       "id": "TPEF1",
@@ -988,22 +1102,22 @@
   "model_info": {
     "xgboost": {
       "description": "Station-specific XGBoost classifier with engineered features",
-      "features": "DO lags, rolling stats, satellite SST/chlorophyll, cross-station deltas",
-      "training": "Per-station with 70/30 temporal split"
+      "features": "DO lags, rolling stats, satellite SST/chlorophyll, cross-station deltas"
     },
     "timesfm": {
       "description": "Google TimesFM 1.0 (200M params) zero-shot forecast",
-      "approach": "Direct DO time-series forecasting with quantile uncertainty estimation",
-      "note": "Used for stations with insufficient training events for XGBoost, excels on sparse-data stations",
-      "benchmark": "AUC-ROC up to 0.91 on sparse stations where XGBoost fails (< 0.30)"
+      "approach": "Direct DO time-series forecasting with quantile uncertainty",
+      "last_run": "2026-04-01 17:18 UTC"
     }
   },
   "summary": {
     "total_stations": 50,
-    "stations_with_models": 7,
+    "stations_with_models": 5,
     "stations_with_realtime": 44,
     "stations_with_data": 44,
-    "stations_with_predictions": 1,
-    "stations_with_warnings": 0
+    "stations_with_predictions": 5,
+    "stations_with_warnings": 0,
+    "timesfm_stations": 4,
+    "xgboost_stations": 1
   }
 }
