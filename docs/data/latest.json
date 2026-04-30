@@ -127,7 +127,7 @@
     {
       "id": "MQMT2",
       "name": "Mesquite Bay, Mission-Aransas Reserve, TX",
-      "has_model": false,
+      "has_model": true,
       "has_realtime": true,
       "status": "active",
       "current": {
@@ -164,12 +164,40 @@
       "n_days": 1484,
       "n_hyp_days": 30,
       "lat": 28.138,
-      "lon": -96.829
+      "lon": -96.829,
+      "predictions": {
+        "1d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 6.13
+        },
+        "3d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 6.36
+        },
+        "5d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 6.51
+        },
+        "7d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 6.54
+        }
+      },
+      "do_forecast": {
+        "1d": 6.13,
+        "3d": 6.36,
+        "5d": 6.51,
+        "7d": 6.54
+      }
     },
     {
       "id": "ADBF1",
       "name": "Dry Bar, Apalachicola Reserve, FL",
-      "has_model": false,
+      "has_model": true,
       "has_realtime": true,
       "status": "active",
       "current": {
@@ -201,7 +229,35 @@
       },
       "n_days": 74,
       "lat": 29.675,
-      "lon": -85.058
+      "lon": -85.058,
+      "predictions": {
+        "1d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 7.12
+        },
+        "3d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 7.31
+        },
+        "5d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 7.13
+        },
+        "7d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 7.22
+        }
+      },
+      "do_forecast": {
+        "1d": 7.12,
+        "3d": 7.31,
+        "5d": 7.13,
+        "7d": 7.22
+      }
     },
     {
       "id": "TCVF1",
@@ -423,7 +479,7 @@
     {
       "id": "MWQT2",
       "name": "Ship Channel, Mission-Aransas Reserve, TX",
-      "has_model": false,
+      "has_model": true,
       "has_realtime": true,
       "status": "active",
       "current": {
@@ -455,7 +511,35 @@
       },
       "n_days": 566,
       "lat": 27.838,
-      "lon": -97.05
+      "lon": -97.05,
+      "predictions": {
+        "1d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 6.63
+        },
+        "3d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 6.78
+        },
+        "5d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 6.93
+        },
+        "7d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 6.92
+        }
+      },
+      "do_forecast": {
+        "1d": 6.63,
+        "3d": 6.78,
+        "5d": 6.93,
+        "7d": 6.92
+      }
     },
     {
       "id": "CWQT2",
@@ -559,8 +643,31 @@
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
-      "current": null,
-      "predictions": null,
+      "current": {
+        "do": 4.13
+      },
+      "predictions": {
+        "1d": {
+          "prob": 0.05,
+          "risk": "low",
+          "predicted_do": 4.24
+        },
+        "3d": {
+          "prob": 0.2122,
+          "risk": "low",
+          "predicted_do": 4.0
+        },
+        "5d": {
+          "prob": 0.32,
+          "risk": "moderate",
+          "predicted_do": 3.5
+        },
+        "7d": {
+          "prob": 0.3404,
+          "risk": "moderate",
+          "predicted_do": 3.46
+        }
+      },
       "model_type": "timesfm",
       "timesfm_benchmark": {
         "1d": {
@@ -581,7 +688,14 @@
         }
       },
       "n_days": 1258,
-      "n_hyp_days": 77
+      "n_hyp_days": 77,
+      "do_forecast": {
+        "1d": 4.24,
+        "3d": 4.0,
+        "5d": 3.5,
+        "7d": 3.46
+      },
+      "currently_hypoxic": false
     },
     {
       "id": "SREF1",
@@ -988,22 +1102,22 @@
   "model_info": {
     "xgboost": {
       "description": "Station-specific XGBoost classifier with engineered features",
-      "features": "DO lags, rolling stats, satellite SST/chlorophyll, cross-station deltas",
-      "training": "Per-station with 70/30 temporal split"
+      "features": "DO lags, rolling stats, satellite SST/chlorophyll, cross-station deltas"
     },
     "timesfm": {
       "description": "Google TimesFM 1.0 (200M params) zero-shot forecast",
-      "approach": "Direct DO time-series forecasting with quantile uncertainty estimation",
-      "note": "Used for stations with insufficient training events for XGBoost, excels on sparse-data stations",
-      "benchmark": "AUC-ROC up to 0.91 on sparse stations where XGBoost fails (< 0.30)"
+      "approach": "Direct DO time-series forecasting with quantile uncertainty",
+      "last_run": "2026-04-30 09:38 UTC"
     }
   },
   "summary": {
     "total_stations": 50,
-    "stations_with_models": 7,
+    "stations_with_models": 5,
     "stations_with_realtime": 44,
     "stations_with_data": 44,
-    "stations_with_predictions": 1,
-    "stations_with_warnings": 0
+    "stations_with_predictions": 5,
+    "stations_with_warnings": 0,
+    "timesfm_stations": 4,
+    "xgboost_stations": 1
   }
 }
