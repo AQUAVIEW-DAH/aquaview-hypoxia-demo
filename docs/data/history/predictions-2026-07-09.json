@@ -1,57 +1,7 @@
 {
-  "updated": "2026-07-09T09:57:37Z",
+  "updated": "2026-07-09T15:27:21Z",
   "update_interval_hours": 6,
   "stations": [
-    {
-      "id": "APQF1",
-      "name": "APQF1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "timesfm",
-      "timesfm_benchmark": {
-        "1d": {
-          "auc_roc": 0.751,
-          "mae": 1.13
-        },
-        "3d": {
-          "auc_roc": 0.685,
-          "mae": 1.35
-        },
-        "5d": {
-          "auc_roc": 0.63,
-          "mae": 1.45
-        },
-        "7d": {
-          "auc_roc": 0.633,
-          "mae": 1.52
-        }
-      },
-      "n_days": 1258,
-      "n_hyp_days": 77
-    },
-    {
-      "id": "GBHM6",
-      "name": "GBHM6",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "xgboost"
-    },
-    {
-      "id": "KATA1",
-      "name": "KATA1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "xgboost"
-    },
     {
       "id": "FRKF1",
       "name": "FRKF1",
@@ -87,18 +37,8 @@
       "n_hyp_days": 160
     },
     {
-      "id": "MBLA1",
-      "name": "MBLA1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "xgboost"
-    },
-    {
-      "id": "BSCA1",
-      "name": "BSCA1",
+      "id": "KATA1",
+      "name": "KATA1",
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
@@ -135,6 +75,66 @@
       },
       "n_days": 3362,
       "n_hyp_days": 48
+    },
+    {
+      "id": "GBHM6",
+      "name": "GBHM6",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "xgboost"
+    },
+    {
+      "id": "BSCA1",
+      "name": "BSCA1",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "xgboost"
+    },
+    {
+      "id": "MBLA1",
+      "name": "MBLA1",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "xgboost"
+    },
+    {
+      "id": "APQF1",
+      "name": "APQF1",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "timesfm",
+      "timesfm_benchmark": {
+        "1d": {
+          "auc_roc": 0.751,
+          "mae": 1.13
+        },
+        "3d": {
+          "auc_roc": 0.685,
+          "mae": 1.35
+        },
+        "5d": {
+          "auc_roc": 0.63,
+          "mae": 1.45
+        },
+        "7d": {
+          "auc_roc": 0.633,
+          "mae": 1.52
+        }
+      },
+      "n_days": 1258,
+      "n_hyp_days": 77
     }
   ],
   "model_info": {
