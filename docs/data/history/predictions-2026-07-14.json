@@ -1,57 +1,7 @@
 {
-  "updated": "2026-07-14T08:20:53Z",
+  "updated": "2026-07-14T14:02:03Z",
   "update_interval_hours": 6,
   "stations": [
-    {
-      "id": "CRTA1",
-      "name": "CRTA1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "timesfm",
-      "timesfm_benchmark": {
-        "1d": {
-          "auc_roc": 0.897,
-          "mae": 0.78
-        },
-        "3d": {
-          "auc_roc": 0.85,
-          "mae": 0.89
-        },
-        "5d": {
-          "auc_roc": 0.759,
-          "mae": 0.96
-        },
-        "7d": {
-          "auc_roc": 0.758,
-          "mae": 1.04
-        }
-      },
-      "n_days": 3362,
-      "n_hyp_days": 48
-    },
-    {
-      "id": "BSCA1",
-      "name": "BSCA1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "xgboost"
-    },
-    {
-      "id": "MBLA1",
-      "name": "MBLA1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "xgboost"
-    },
     {
       "id": "APQF1",
       "name": "APQF1",
@@ -83,8 +33,8 @@
       "n_hyp_days": 77
     },
     {
-      "id": "KATA1",
-      "name": "KATA1",
+      "id": "BSCA1",
+      "name": "BSCA1",
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
@@ -95,6 +45,16 @@
     {
       "id": "GBHM6",
       "name": "GBHM6",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "xgboost"
+    },
+    {
+      "id": "KATA1",
+      "name": "KATA1",
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
@@ -135,6 +95,46 @@
       },
       "n_days": 616,
       "n_hyp_days": 160
+    },
+    {
+      "id": "MBLA1",
+      "name": "MBLA1",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "xgboost"
+    },
+    {
+      "id": "CRTA1",
+      "name": "CRTA1",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "timesfm",
+      "timesfm_benchmark": {
+        "1d": {
+          "auc_roc": 0.897,
+          "mae": 0.78
+        },
+        "3d": {
+          "auc_roc": 0.85,
+          "mae": 0.89
+        },
+        "5d": {
+          "auc_roc": 0.759,
+          "mae": 0.96
+        },
+        "7d": {
+          "auc_roc": 0.758,
+          "mae": 1.04
+        }
+      },
+      "n_days": 3362,
+      "n_hyp_days": 48
     }
   ],
   "model_info": {
