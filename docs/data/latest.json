@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-16T14:10:38Z",
+  "updated": "2026-07-16T19:23:08Z",
   "update_interval_hours": 6,
   "stations": [
     {
@@ -13,38 +13,24 @@
       "model_type": "xgboost"
     },
     {
-      "id": "FRKF1",
-      "name": "FRKF1",
+      "id": "BSCA1",
+      "name": "BSCA1",
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
       "current": null,
       "predictions": null,
-      "model_type": "timesfm",
-      "timesfm_benchmark": {
-        "1d": {
-          "auc_roc": 0.832,
-          "mae": 1.46,
-          "correlation": 0.668
-        },
-        "3d": {
-          "auc_roc": 0.73,
-          "mae": 2.09,
-          "correlation": 0.341
-        },
-        "5d": {
-          "auc_roc": 0.579,
-          "mae": 2.35,
-          "correlation": 0.076
-        },
-        "7d": {
-          "auc_roc": 0.41,
-          "mae": 2.55,
-          "correlation": -0.119
-        }
-      },
-      "n_days": 616,
-      "n_hyp_days": 160
+      "model_type": "xgboost"
+    },
+    {
+      "id": "GBHM6",
+      "name": "GBHM6",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "xgboost"
     },
     {
       "id": "APQF1",
@@ -107,26 +93,6 @@
       "n_hyp_days": 48
     },
     {
-      "id": "BSCA1",
-      "name": "BSCA1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "xgboost"
-    },
-    {
-      "id": "GBHM6",
-      "name": "GBHM6",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "xgboost"
-    },
-    {
       "id": "KATA1",
       "name": "KATA1",
       "has_model": true,
@@ -135,6 +101,40 @@
       "current": null,
       "predictions": null,
       "model_type": "xgboost"
+    },
+    {
+      "id": "FRKF1",
+      "name": "FRKF1",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "timesfm",
+      "timesfm_benchmark": {
+        "1d": {
+          "auc_roc": 0.832,
+          "mae": 1.46,
+          "correlation": 0.668
+        },
+        "3d": {
+          "auc_roc": 0.73,
+          "mae": 2.09,
+          "correlation": 0.341
+        },
+        "5d": {
+          "auc_roc": 0.579,
+          "mae": 2.35,
+          "correlation": 0.076
+        },
+        "7d": {
+          "auc_roc": 0.41,
+          "mae": 2.55,
+          "correlation": -0.119
+        }
+      },
+      "n_days": 616,
+      "n_hyp_days": 160
     }
   ],
   "model_info": {
