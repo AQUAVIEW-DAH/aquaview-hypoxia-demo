@@ -1,10 +1,10 @@
 {
-  "updated": "2026-07-18T08:03:41Z",
+  "updated": "2026-07-18T13:37:58Z",
   "update_interval_hours": 6,
   "stations": [
     {
-      "id": "GBHM6",
-      "name": "GBHM6",
+      "id": "KATA1",
+      "name": "KATA1",
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
@@ -53,16 +53,6 @@
       "n_hyp_days": 77
     },
     {
-      "id": "KATA1",
-      "name": "KATA1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "xgboost"
-    },
-    {
       "id": "FRKF1",
       "name": "FRKF1",
       "has_model": true,
@@ -99,6 +89,16 @@
     {
       "id": "BSCA1",
       "name": "BSCA1",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "xgboost"
+    },
+    {
+      "id": "GBHM6",
+      "name": "GBHM6",
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
