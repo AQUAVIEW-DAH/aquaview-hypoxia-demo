@@ -1,57 +1,7 @@
 {
-  "updated": "2026-08-14T07:41:55Z",
+  "updated": "2026-08-14T13:21:42Z",
   "update_interval_hours": 6,
   "stations": [
-    {
-      "id": "CRTA1",
-      "name": "CRTA1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "timesfm",
-      "timesfm_benchmark": {
-        "1d": {
-          "auc_roc": 0.897,
-          "mae": 0.78
-        },
-        "3d": {
-          "auc_roc": 0.85,
-          "mae": 0.89
-        },
-        "5d": {
-          "auc_roc": 0.759,
-          "mae": 0.96
-        },
-        "7d": {
-          "auc_roc": 0.758,
-          "mae": 1.04
-        }
-      },
-      "n_days": 3362,
-      "n_hyp_days": 48
-    },
-    {
-      "id": "GBHM6",
-      "name": "GBHM6",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "xgboost"
-    },
-    {
-      "id": "KATA1",
-      "name": "KATA1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "xgboost"
-    },
     {
       "id": "BSCA1",
       "name": "BSCA1",
@@ -61,6 +11,36 @@
       "current": null,
       "predictions": null,
       "model_type": "xgboost"
+    },
+    {
+      "id": "APQF1",
+      "name": "APQF1",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "timesfm",
+      "timesfm_benchmark": {
+        "1d": {
+          "auc_roc": 0.751,
+          "mae": 1.13
+        },
+        "3d": {
+          "auc_roc": 0.685,
+          "mae": 1.35
+        },
+        "5d": {
+          "auc_roc": 0.63,
+          "mae": 1.45
+        },
+        "7d": {
+          "auc_roc": 0.633,
+          "mae": 1.52
+        }
+      },
+      "n_days": 1258,
+      "n_hyp_days": 77
     },
     {
       "id": "FRKF1",
@@ -97,8 +77,8 @@
       "n_hyp_days": 160
     },
     {
-      "id": "APQF1",
-      "name": "APQF1",
+      "id": "CRTA1",
+      "name": "CRTA1",
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
@@ -107,24 +87,44 @@
       "model_type": "timesfm",
       "timesfm_benchmark": {
         "1d": {
-          "auc_roc": 0.751,
-          "mae": 1.13
+          "auc_roc": 0.897,
+          "mae": 0.78
         },
         "3d": {
-          "auc_roc": 0.685,
-          "mae": 1.35
+          "auc_roc": 0.85,
+          "mae": 0.89
         },
         "5d": {
-          "auc_roc": 0.63,
-          "mae": 1.45
+          "auc_roc": 0.759,
+          "mae": 0.96
         },
         "7d": {
-          "auc_roc": 0.633,
-          "mae": 1.52
+          "auc_roc": 0.758,
+          "mae": 1.04
         }
       },
-      "n_days": 1258,
-      "n_hyp_days": 77
+      "n_days": 3362,
+      "n_hyp_days": 48
+    },
+    {
+      "id": "KATA1",
+      "name": "KATA1",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "xgboost"
+    },
+    {
+      "id": "GBHM6",
+      "name": "GBHM6",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "xgboost"
     },
     {
       "id": "MBLA1",
