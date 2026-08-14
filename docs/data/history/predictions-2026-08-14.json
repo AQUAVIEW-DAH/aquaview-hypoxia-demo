@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-14T13:21:42Z",
+  "updated": "2026-08-14T19:03:22Z",
   "update_interval_hours": 6,
   "stations": [
     {
@@ -13,34 +13,14 @@
       "model_type": "xgboost"
     },
     {
-      "id": "APQF1",
-      "name": "APQF1",
+      "id": "MBLA1",
+      "name": "MBLA1",
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
       "current": null,
       "predictions": null,
-      "model_type": "timesfm",
-      "timesfm_benchmark": {
-        "1d": {
-          "auc_roc": 0.751,
-          "mae": 1.13
-        },
-        "3d": {
-          "auc_roc": 0.685,
-          "mae": 1.35
-        },
-        "5d": {
-          "auc_roc": 0.63,
-          "mae": 1.45
-        },
-        "7d": {
-          "auc_roc": 0.633,
-          "mae": 1.52
-        }
-      },
-      "n_days": 1258,
-      "n_hyp_days": 77
+      "model_type": "xgboost"
     },
     {
       "id": "FRKF1",
@@ -77,6 +57,46 @@
       "n_hyp_days": 160
     },
     {
+      "id": "APQF1",
+      "name": "APQF1",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "timesfm",
+      "timesfm_benchmark": {
+        "1d": {
+          "auc_roc": 0.751,
+          "mae": 1.13
+        },
+        "3d": {
+          "auc_roc": 0.685,
+          "mae": 1.35
+        },
+        "5d": {
+          "auc_roc": 0.63,
+          "mae": 1.45
+        },
+        "7d": {
+          "auc_roc": 0.633,
+          "mae": 1.52
+        }
+      },
+      "n_days": 1258,
+      "n_hyp_days": 77
+    },
+    {
+      "id": "KATA1",
+      "name": "KATA1",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "xgboost"
+    },
+    {
       "id": "CRTA1",
       "name": "CRTA1",
       "has_model": true,
@@ -107,28 +127,8 @@
       "n_hyp_days": 48
     },
     {
-      "id": "KATA1",
-      "name": "KATA1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "xgboost"
-    },
-    {
       "id": "GBHM6",
       "name": "GBHM6",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "xgboost"
-    },
-    {
-      "id": "MBLA1",
-      "name": "MBLA1",
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
