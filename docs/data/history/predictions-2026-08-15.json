@@ -1,27 +1,7 @@
 {
-  "updated": "2026-08-15T06:50:09Z",
+  "updated": "2026-08-15T12:51:27Z",
   "update_interval_hours": 6,
   "stations": [
-    {
-      "id": "GBHM6",
-      "name": "GBHM6",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "xgboost"
-    },
-    {
-      "id": "KATA1",
-      "name": "KATA1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "xgboost"
-    },
     {
       "id": "FRKF1",
       "name": "FRKF1",
@@ -85,6 +65,26 @@
       },
       "n_days": 1258,
       "n_hyp_days": 77
+    },
+    {
+      "id": "KATA1",
+      "name": "KATA1",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "xgboost"
+    },
+    {
+      "id": "GBHM6",
+      "name": "GBHM6",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "xgboost"
     },
     {
       "id": "MBLA1",
