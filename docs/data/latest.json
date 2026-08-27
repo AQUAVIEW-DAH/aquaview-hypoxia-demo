@@ -1,7 +1,17 @@
 {
-  "updated": "2026-08-26T19:55:32Z",
+  "updated": "2026-08-27T08:51:57Z",
   "update_interval_hours": 6,
   "stations": [
+    {
+      "id": "GBHM6",
+      "name": "GBHM6",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "xgboost"
+    },
     {
       "id": "APQF1",
       "name": "APQF1",
@@ -33,18 +43,42 @@
       "n_hyp_days": 77
     },
     {
-      "id": "BSCA1",
-      "name": "BSCA1",
+      "id": "FRKF1",
+      "name": "FRKF1",
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
       "current": null,
       "predictions": null,
-      "model_type": "xgboost"
+      "model_type": "timesfm",
+      "timesfm_benchmark": {
+        "1d": {
+          "auc_roc": 0.832,
+          "mae": 1.46,
+          "correlation": 0.668
+        },
+        "3d": {
+          "auc_roc": 0.73,
+          "mae": 2.09,
+          "correlation": 0.341
+        },
+        "5d": {
+          "auc_roc": 0.579,
+          "mae": 2.35,
+          "correlation": 0.076
+        },
+        "7d": {
+          "auc_roc": 0.41,
+          "mae": 2.55,
+          "correlation": -0.119
+        }
+      },
+      "n_days": 616,
+      "n_hyp_days": 160
     },
     {
-      "id": "GBHM6",
-      "name": "GBHM6",
+      "id": "KATA1",
+      "name": "KATA1",
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
@@ -83,40 +117,6 @@
       "n_hyp_days": 48
     },
     {
-      "id": "FRKF1",
-      "name": "FRKF1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "timesfm",
-      "timesfm_benchmark": {
-        "1d": {
-          "auc_roc": 0.832,
-          "mae": 1.46,
-          "correlation": 0.668
-        },
-        "3d": {
-          "auc_roc": 0.73,
-          "mae": 2.09,
-          "correlation": 0.341
-        },
-        "5d": {
-          "auc_roc": 0.579,
-          "mae": 2.35,
-          "correlation": 0.076
-        },
-        "7d": {
-          "auc_roc": 0.41,
-          "mae": 2.55,
-          "correlation": -0.119
-        }
-      },
-      "n_days": 616,
-      "n_hyp_days": 160
-    },
-    {
       "id": "MBLA1",
       "name": "MBLA1",
       "has_model": true,
@@ -127,8 +127,8 @@
       "model_type": "xgboost"
     },
     {
-      "id": "KATA1",
-      "name": "KATA1",
+      "id": "BSCA1",
+      "name": "BSCA1",
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
