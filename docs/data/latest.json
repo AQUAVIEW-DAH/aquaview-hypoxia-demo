@@ -1,38 +1,25 @@
 {
-  "updated": "2026-10-30T06:23:12Z",
+  "updated": "2026-10-30T12:20:52Z",
   "update_interval_hours": 6,
   "stations": [
+    {
+      "id": "MBLA1",
+      "name": "MBLA1",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "xgboost"
+    },
     {
       "id": "APQF1",
       "name": "APQF1",
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
-      "current": {
-        "do": 7.51
-      },
-      "predictions": {
-        "1d": {
-          "prob": 0.05,
-          "risk": "low",
-          "predicted_do": 7.29
-        },
-        "3d": {
-          "prob": 0.05,
-          "risk": "low",
-          "predicted_do": 7.31
-        },
-        "5d": {
-          "prob": 0.05,
-          "risk": "low",
-          "predicted_do": 7.05
-        },
-        "7d": {
-          "prob": 0.05,
-          "risk": "low",
-          "predicted_do": 6.82
-        }
-      },
+      "current": null,
+      "predictions": null,
       "model_type": "timesfm",
       "timesfm_benchmark": {
         "1d": {
@@ -53,14 +40,7 @@
         }
       },
       "n_days": 1258,
-      "n_hyp_days": 77,
-      "do_forecast": {
-        "1d": 7.29,
-        "3d": 7.31,
-        "5d": 7.05,
-        "7d": 6.82
-      },
-      "currently_hypoxic": false
+      "n_hyp_days": 77
     },
     {
       "id": "FRKF1",
@@ -97,68 +77,18 @@
       "n_hyp_days": 160
     },
     {
-      "id": "KATA1",
-      "name": "KATA1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "xgboost"
-    },
-    {
-      "id": "MBLA1",
-      "name": "MBLA1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "xgboost"
-    },
-    {
       "id": "GBHM6",
       "name": "GBHM6",
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
-      "current": {
-        "do": 6.02
-      },
-      "predictions": {
-        "1d": {
-          "prob": 0.05,
-          "risk": "low",
-          "predicted_do": 5.68
-        },
-        "3d": {
-          "prob": 0.05,
-          "risk": "low",
-          "predicted_do": 5.11
-        },
-        "5d": {
-          "prob": 0.05,
-          "risk": "low",
-          "predicted_do": 4.86
-        },
-        "7d": {
-          "prob": 0.05,
-          "risk": "low",
-          "predicted_do": 4.74
-        }
-      },
-      "model_type": "timesfm",
-      "do_forecast": {
-        "1d": 5.68,
-        "3d": 5.11,
-        "5d": 4.86,
-        "7d": 4.74
-      },
-      "currently_hypoxic": false
+      "current": null,
+      "predictions": null,
+      "model_type": "xgboost"
     },
     {
-      "id": "BSCA1",
-      "name": "BSCA1",
+      "id": "KATA1",
+      "name": "KATA1",
       "has_model": true,
       "has_realtime": false,
       "status": "historical_only",
@@ -195,27 +125,37 @@
       },
       "n_days": 3362,
       "n_hyp_days": 48
+    },
+    {
+      "id": "BSCA1",
+      "name": "BSCA1",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "xgboost"
     }
   ],
   "model_info": {
     "xgboost": {
       "description": "Station-specific XGBoost classifier with engineered features",
-      "features": "DO lags, rolling stats, satellite SST/chlorophyll, cross-station deltas"
+      "features": "DO lags, rolling stats, satellite SST/chlorophyll, cross-station deltas",
+      "training": "Per-station with 70/30 temporal split"
     },
     "timesfm": {
       "description": "Google TimesFM 1.0 (200M params) zero-shot forecast",
-      "approach": "Direct DO time-series forecasting with quantile uncertainty",
-      "last_run": "2026-10-30 08:06 UTC"
+      "approach": "Direct DO time-series forecasting with quantile uncertainty estimation",
+      "note": "Used for stations with insufficient training events for XGBoost, excels on sparse-data stations",
+      "benchmark": "AUC-ROC up to 0.91 on sparse stations where XGBoost fails (< 0.30)"
     }
   },
   "summary": {
     "total_stations": 7,
-    "stations_with_models": 2,
+    "stations_with_models": 7,
     "stations_with_realtime": 0,
     "stations_with_data": 0,
-    "stations_with_predictions": 2,
-    "stations_with_warnings": 0,
-    "timesfm_stations": 2,
-    "xgboost_stations": 0
+    "stations_with_predictions": 0,
+    "stations_with_warnings": 0
   }
 }
