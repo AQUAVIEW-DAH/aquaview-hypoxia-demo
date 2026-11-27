@@ -1,7 +1,17 @@
 {
-  "updated": "2026-11-26T18:14:17Z",
+  "updated": "2026-11-27T00:31:38Z",
   "update_interval_hours": 6,
   "stations": [
+    {
+      "id": "BSCA1",
+      "name": "BSCA1",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "xgboost"
+    },
     {
       "id": "KATA1",
       "name": "KATA1",
@@ -47,16 +57,6 @@
       "n_hyp_days": 160
     },
     {
-      "id": "GBHM6",
-      "name": "GBHM6",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "xgboost"
-    },
-    {
       "id": "APQF1",
       "name": "APQF1",
       "has_model": true,
@@ -87,6 +87,16 @@
       "n_hyp_days": 77
     },
     {
+      "id": "GBHM6",
+      "name": "GBHM6",
+      "has_model": true,
+      "has_realtime": false,
+      "status": "historical_only",
+      "current": null,
+      "predictions": null,
+      "model_type": "xgboost"
+    },
+    {
       "id": "CRTA1",
       "name": "CRTA1",
       "has_model": true,
@@ -115,16 +125,6 @@
       },
       "n_days": 3362,
       "n_hyp_days": 48
-    },
-    {
-      "id": "BSCA1",
-      "name": "BSCA1",
-      "has_model": true,
-      "has_realtime": false,
-      "status": "historical_only",
-      "current": null,
-      "predictions": null,
-      "model_type": "xgboost"
     },
     {
       "id": "MBLA1",
